@@ -17,8 +17,7 @@ By pressing menu (hold up button) the wind direction can be defined on on either
 
 The tack angle is set to 90 degrees.
 
-![screehot](Screenshot/Screenshot TackingMaster.png)
-![screehot](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
+![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Screenshot%20TackingMaster.png?raw=true)
 
 
 ## Versions
