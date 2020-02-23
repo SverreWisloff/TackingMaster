@@ -9,7 +9,7 @@ You can then also observe wind turns, see the consequences and make good decisio
 
 ## Use
 
-The direction where the wind comes from is up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north.
+The direction where the wind comes from is up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The red dot show your course over ground direction.
 
 With the up and down buttons you can adjust the wind direction with 5 degree increments.
 
