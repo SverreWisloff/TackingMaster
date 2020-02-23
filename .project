@@ -16,6 +16,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>README.md</name>
+			<type>1</type>
+			<location>C:/Users/sw/workspace/TackingMaster/README.md</location>
+		</link>
+		<link>
 			<name>resources-nob/strings.xml</name>
 			<type>1</type>
 			<location>C:/Users/sw/workspace/TackingMaster/resources-nob/strings.xml</location>
