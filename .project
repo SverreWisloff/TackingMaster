@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>TackingMaster</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>connectiq.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>connectiq.projectNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>resources-nob/strings.xml</name>
+			<type>1</type>
+			<location>C:/Users/sw/workspace/TackingMaster/resources-nob/strings.xml</location>
+		</link>
+		<link>
+			<name>resources/drawables/TackingMaster.png</name>
+			<type>1</type>
+			<location>C:/Users/sw/workspace/TackingMaster/resources/drawables/TackingMaster.png</location>
+		</link>
+	</linkedResources>
+</projectDescription>
