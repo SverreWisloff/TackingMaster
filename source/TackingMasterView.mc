@@ -42,7 +42,9 @@ class TackingMasterView extends WatchUi.View {
 //        System.println("TackingMasterView.initialize - WindDirection=" + WindDirection);
     }
 
+    //=====================
     // Load your resources here
+    //=====================
     function onLayout(dc) {
         setLayout(Rez.Layouts.MainLayout(dc));
 
@@ -52,13 +54,17 @@ class TackingMasterView extends WatchUi.View {
 
     }
 
+    //=====================
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory.
+    //=====================
     function onShow() {
     }
 
+    //=====================
     // Update the view
+    //=====================
     function onUpdate(dc) {
         // Call the parent onUpdate function to redraw the layout
         //System.println("TackingMasterView.onUpdate");
@@ -159,8 +165,11 @@ class TackingMasterView extends WatchUi.View {
             }
         }
     }
+
     
+    //=====================
     // Draws North
+    //=====================
     function drawNorth(dc, WindDirection) {
         var width = dc.getWidth();
         var height = dc.getHeight();
@@ -176,7 +185,9 @@ class TackingMasterView extends WatchUi.View {
  		//12 = Halv font-høyde
     }
 
+    //=====================
     // Draws COG
+    //=====================
     function drawCOG(dc, WindDirection, COG) {
         var width = dc.getWidth();
         var height = dc.getHeight();
