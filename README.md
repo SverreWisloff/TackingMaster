@@ -17,9 +17,24 @@ By pressing menu (hold up button) the wind direction can be defined on on either
 
 The tack angle is set to 90 degrees.
 
+## Versions
+
+1.0: 
+ - Menu: Set wind dir by port/starboard close-hauled direction
+ - Up/Down-buttons : increments wind direction with 5 degrees
+ 
+1.1:
+ - Small fixes
+ 
+## Please use it if you find it convinient
+
+And I am happy to hear what you think about it
+
 The code for the app is here:
 <a href="https://github.com/SverreWisloff/TackingMaster/">https://github.com/SverreWisloff/TackingMaster/</a>
 
 Happy sailing!
 
 -Sverre
+
+
