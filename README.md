@@ -22,9 +22,11 @@ The tack angle is set to 90 degrees.
 1.0: 
  - Menu: Set wind dir by port/starboard close-hauled direction
  - Up/Down-buttons : increments wind direction with 5 degrees
+ - App is uploaded to the Garmin Connect IQ app store, and are waiting for approval
  
 1.1:
  - Small fixes
+
  
 ## Please use it if you find it convinient
 
