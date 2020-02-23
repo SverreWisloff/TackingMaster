@@ -10,6 +10,8 @@ var screenShape;
 //var m_WD; //Wind direction
 var myCount =  0;
 var m_TackAngle = 90;
+var m_posnInfo = null;
+
 
 function timerCallback() {
     myCount += 1;
@@ -28,6 +30,7 @@ function reduse_deg(deg) {
 
 
 class TackingMasterView extends WatchUi.View {
+
 
     function initialize() {
         View.initialize();
@@ -57,11 +60,15 @@ class TackingMasterView extends WatchUi.View {
     //=====================
     // Called when this View is brought to the foreground. Restore
     // the state of this View and prepare it to be shown. This includes
-    // loading resources into memory.
+    // loading resources into memory. 
     //=====================
     function onShow() {
     }
 
+    function setPosition(info) {
+        m_posnInfo = info;
+        WatchUi.requestUpdate();
+    }
     //=====================
     // Update the view
     //=====================
@@ -90,16 +97,29 @@ class TackingMasterView extends WatchUi.View {
         drawNorth(dc, WindDirection);
         
 		// Find COG & SOG
-		var positionInfo = Position.getInfo();
-		var COG_deg = 888;
-		var Speed_kn = 888;
-		if(positionInfo.heading!=null){
-			COG_deg = reduse_deg((positionInfo.heading)/Math.PI*180);
+		//var positionInfo = Position.getInfo();
+		var COG_deg;
+		var Speed_kn;
+		if(m_posnInfo!=null	){ 
+			COG_deg = reduse_deg((m_posnInfo.heading)/Math.PI*180);
 		}
-		if(positionInfo.speed!=null){
-			Speed_kn = positionInfo.speed * 1.9438444924406;
+		else{
+			COG_deg = 0;
 		}
-
+		if(m_posnInfo!=null){
+			Speed_kn = m_posnInfo.speed * 1.9438444924406;
+		}
+		else {
+			Speed_kn = 0;
+		}
+/*        if (m_posnInfo!=null){
+        	var acc=0;
+        	acc = m_posnInfo.accuracy;
+        	System.println("TackingMasterView.onUpdate");
+        	System.println("setPosition : accuracy=" + acc );
+        	Position.QUALITY_GOOD
+        }
+*/
 		// Draw wind directions
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.drawText(dc.getWidth()/2, dc.getHeight()/2-110, Graphics.FONT_TINY, WindDirection, Graphics.TEXT_JUSTIFY_CENTER);

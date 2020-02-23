@@ -21,6 +21,7 @@ class TackingMasterDelegate extends WatchUi.BehaviorDelegate {
         System.println(keyEvent.getKey());
         
         if (keyEvent.getKey()==KEY_ENTER){
+        	//Nothing happens on ENTER
         }
         else if (keyEvent.getKey()==KEY_UP){
 	        //Press UP to increase WindDirection with 5 degrees
