@@ -17,7 +17,7 @@ By pressing menu (hold up button) the wind direction can be defined on on either
 
 The tack angle is set to 90 degrees.
 
-![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Screenshot%20TackingMaster%2011.png?raw=true)
+![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/TackingMaster%20on%20watch%2011.png?raw=true)
 
 
 ## Versions
