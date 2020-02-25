@@ -6,13 +6,7 @@ using Toybox.Timer;
 using Toybox.Position;
 using Toybox.Math;
 
-var screenShape;
-//var m_WD; //Wind direction
 var myCount =  0;
-var m_TackAngle = 90;
-var m_posnInfo = null;
-var m_width;
-var m_height;
 
 
 function timerCallback() {
@@ -33,16 +27,31 @@ function reduse_deg(deg) {
 
 class TackingMasterView extends WatchUi.View {
 
+	//Member variables
+	var m_screenShape;
+	var m_TackAngle = 90;
+	var m_posnInfo = null;
+	var m_width;
+	var m_height;
+	var m_WindDirection;
+    var m_WindDirStarboard;
+    var m_WindDirPort;
+    var m_CogDotSize = 8;
+	var m_COG_deg;
+	var m_Speed_kn;
 
     function initialize() {
         View.initialize();
 //        System.println("TackingMasterView.initialize");
-        screenShape = System.getDeviceSettings().screenShape;
+        m_screenShape = System.getDeviceSettings().screenShape;
 
 		// Get the WindDirection from the settings-storage
         var app = App.getApp();
         var WindDirection = Application.Storage.getValue("WindDirection");
-        if (WindDirection==null){WindDirection=100;}
+        
+        if (WindDirection==null){
+        	WindDirection=100;
+        }
         Application.Storage.setValue("WindDirection", WindDirection);
 //        System.println("TackingMasterView.initialize - WindDirection=" + WindDirection);
     }
@@ -71,39 +80,38 @@ class TackingMasterView extends WatchUi.View {
         m_posnInfo = info;
         WatchUi.requestUpdate();
     }
+
     //=====================
     // Update the view
     //=====================
     function onUpdate(dc) {
-        m_width = dc.getWidth();
-        m_height = dc.getHeight();
+		m_width = dc.getWidth();
+		m_height = dc.getHeight();
 
         // Call the parent onUpdate function to redraw the layout
         //System.println("TackingMasterView.onUpdate");
         View.onUpdate(dc);
         
 		// Get Wind-dir
-        var WindDirection = Application.Storage.getValue("WindDirection");
-        WindDirection = Math.round(WindDirection);
-        WindDirection = reduse_deg(WindDirection.toLong());
-        var StarboardCloseDir = reduse_deg(WindDirection + (m_TackAngle/2) );
-        var PortCloseDir = reduse_deg(WindDirection - (m_TackAngle/2) );
+        m_WindDirection = Application.Storage.getValue("WindDirection");
+        m_WindDirection = Math.round(m_WindDirection);
+        m_WindDirection = reduse_deg(m_WindDirection.toLong());
+        m_WindDirStarboard = reduse_deg(m_WindDirection + (m_TackAngle/2) );
+        m_WindDirPort = reduse_deg(m_WindDirection - (m_TackAngle/2) );
         
  		// Get COG & SOG
 		//var positionInfo = Position.getInfo();
-		var COG_deg;
-		var Speed_kn;
 		if(m_posnInfo!=null	){ 
-			COG_deg = reduse_deg((m_posnInfo.heading)/Math.PI*180);
+			m_COG_deg = reduse_deg((m_posnInfo.heading)/Math.PI*180);
 		}
 		else{
-			COG_deg = 0;
+			m_COG_deg = 0;
 		}
 		if(m_posnInfo!=null){
-			Speed_kn = m_posnInfo.speed * 1.9438444924406;
+			m_Speed_kn = m_posnInfo.speed * 1.9438444924406;
 		}
 		else {
-			Speed_kn = 0;
+			m_Speed_kn = 0;
 		}
 /*        if (m_posnInfo!=null){
         	var acc=0;
@@ -117,33 +125,37 @@ class TackingMasterView extends WatchUi.View {
         drawHashMarks(dc);
 
         // Draw North arrow
-        drawNorth(dc, WindDirection);
+        drawNorth(dc);
         
-        // Draw COG-circle and boat
-		drawCogBoat(dc, WindDirection, COG_deg);
+        // Draw boat
+		drawBoat(dc);
 
 		// Draw laylines
 		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
 		dc.setPenWidth(2);
-		dc.drawLine(m_width/2, m_height/2, 0, 0);
-		dc.drawLine(m_width/2, m_height/2, m_height, 0 );
-		dc.drawArc( m_width/2, m_height/2, m_height/2-20, dc.ARC_CLOCKWISE, 135, 45);
+		moveToOrigoC(dc, -m_width*Math.sin(Math.PI/4), -m_height*Math.sin(Math.PI/4));
+		lineToOrigoC(dc, 0, 0);
+		lineToOrigoC(dc,  m_width*Math.sin(Math.PI/4), -m_height*Math.sin(Math.PI/4));
+		dc.drawArc( m_width/2, m_height/2, m_height/2-20, dc.ARC_CLOCKWISE, 180-m_TackAngle/2, m_TackAngle/2);
         
-		// Draw wind directions
+		// Draw numbers for wind directions
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-        dc.drawText(m_width/2, m_height/2-115, Graphics.FONT_TINY, WindDirection, Graphics.TEXT_JUSTIFY_CENTER);
-        dc.drawText(m_width/5, m_height/2-70, Graphics.FONT_TINY, PortCloseDir, Graphics.TEXT_JUSTIFY_LEFT);
-        dc.drawText(m_width/5*4, m_height/2-70, Graphics.FONT_TINY, StarboardCloseDir, Graphics.TEXT_JUSTIFY_RIGHT);
+        dc.drawText(m_width/2, m_height/2-115, Graphics.FONT_TINY, m_WindDirection, Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(m_width/5, m_height/2-70, Graphics.FONT_TINY, m_WindDirPort, Graphics.TEXT_JUSTIFY_LEFT);
+        dc.drawText(m_width/5*4, m_height/2-70, Graphics.FONT_TINY, m_WindDirStarboard, Graphics.TEXT_JUSTIFY_RIGHT);
 
-		// Draw COG
+        // Draw COG-circle 
+		drawCogDot(dc);
+
+		// Draw COG-text
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(m_width/2, m_height/2+10, Graphics.FONT_TINY, COG_deg.toNumber() + " deg", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(m_width/2, m_height/2+10, Graphics.FONT_TINY, m_COG_deg.toNumber() + " deg", Graphics.TEXT_JUSTIFY_CENTER);
 
-		// Draw SOG
+		// Draw SOG-text
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(m_width/2, m_height/2+40, Graphics.FONT_TINY, Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(m_width/2, m_height/2+40, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 
-		// Draw Time
+		// Draw Time-text
 		var myTime = System.getClockTime(); // ClockTime object
 		var myTimeText = myTime.hour.format("%02d") + ":" + myTime.min.format("%02d") + ":" + myTime.sec.format("%02d");
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
@@ -157,18 +169,20 @@ class TackingMasterView extends WatchUi.View {
     function onHide() {
     }
 
+
     // Draws the clock tick marks around the outside edges of the screen.
+	// ==========================================================================
     function drawHashMarks(dc) {
 
 		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
 		dc.setPenWidth(2);
 
         // Draw hashmarks differently depending on screen geometry.
-        if (System.SCREEN_SHAPE_ROUND == screenShape) {
+        if (System.SCREEN_SHAPE_ROUND == m_screenShape) {
             var sX, sY;
             var eX, eY;
             var outerRad = m_width / 2;
-            var innerRad = outerRad - 7;
+            var innerRad = outerRad - 8;
             // Loop through each 15 minute block and draw tick marks.
             for (var i = 0; i < 2 * Math.PI ; i += (Math.PI / 48)) {
                 sY = outerRad + innerRad * Math.sin(i);
@@ -192,70 +206,91 @@ class TackingMasterView extends WatchUi.View {
 
     
     //=====================
-    // Draws North
+    // Draws North 
     //=====================
-    function drawNorth(dc, WindDirection) {
+    function drawNorth(dc) {
 		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
 
-		var i = -(WindDirection+90)/180.0 * Math.PI;
+		var i = -(m_WindDirection+90)/180.0 * Math.PI;
         var X = ((m_width/2)-20) * Math.cos(i);
         var Y = ((m_height/2)-20) * Math.sin(i);
 		
-//		System.println("drawNorth : WindDirection=" + WindDirection + " i="+i);
+		var fontHeight = dc.getFontHeight(Graphics.FONT_TINY); 
+		//12 = Halv font-høyde
 		
-    	dc.drawText(X + (m_width/2), Y + (m_height/2) - 12, Graphics.FONT_TINY, "N", Graphics.TEXT_JUSTIFY_CENTER);
- 		//12 = Halv font-høyde
+    	dc.drawText(X + (m_width/2), Y + (m_height/2) - fontHeight/2, Graphics.FONT_TINY, "N", Graphics.TEXT_JUSTIFY_CENTER);
+ 		
     }
 
     //=====================
-    // Draws COG and Boat
+    // Draws COG-dot 
     //=====================
-    function drawCogBoat(dc, WindDirection, COG) {
-        var dotSize = 8;
+    function drawCogDot(dc) {
     	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
 
 		// X,Y refers to origo i face-centre
-		var i = -(WindDirection+90-COG)/180.0 * Math.PI;
-        var X = ((m_width/2)-dotSize) * Math.cos(i);
-        var Y = ((m_height/2)-dotSize) * Math.sin(i);
+		var i = -(m_WindDirection+90-m_COG_deg)/180.0 * Math.PI;
+        var X = ((m_width/2)-m_CogDotSize) * Math.cos(i);
+        var Y = ((m_height/2)-m_CogDotSize) * Math.sin(i);
 		
 //		System.println("drawNorth : WindDirection=" + WindDirection + " i="+i);
 		
-    	dc.fillCircle(X + (m_width/2), Y + (m_height/2), dotSize);
-    	
+    	dc.fillCircle(X + (m_width/2), Y + (m_height/2), m_CogDotSize);
+    }	
+    //=====================
+    // Draws  Boat
+    //=====================
+    function drawBoat(dc) {
+
+		// X,Y refers to origo i face-centre
+		var WD = -(m_WindDirection+90-m_COG_deg)/180.0 * Math.PI;
+		WD = WD + Math.PI/2;
+		
     	//Draw Boat
     	dc.setPenWidth(3);
     	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
 
-//    	moveTo( dc, (width/2), (height/2) );
-//    	lineTo( dc, (width/2) + 40*Math.cos(i),     (width/2) + 40*Math.sin(i) );
+/*		var arrayBoat= new [20];
+		// Initialize the sub-arrays
+		for( var i = 0; i < 20; i += 1 ) {
+		    arrayBoat[i] = new [2];
+		}	*/	
 
-//X = x*Math.cos(i) - y*Math.sin(i)
-//Y = x*Math.sin(i) + y*Math.cos(i)
-
-		i = i + Math.PI/2;
+		var arrayBoat = [ 
+				[+  0,- 50], 
+				[+  6,- 40], 
+				[+ 10,- 30], 
+				[+ 13,- 20], 
+				[+ 15,- 10], 
+				[+ 16,-  0], 
+				[+ 17,+ 20], 
+				[+ 17,+ 30], 
+				[+ 16,+ 40], 
+				[+ 13,+ 50], 
+				[- 13,+ 50], 
+				[- 16,+ 40], 
+				[- 17,+ 30], 
+				[- 17,+ 20], 
+				[- 16,-  0], 
+				[- 15,- 10], 
+				[- 13,- 20], 
+				[- 10,- 30], 
+				[-  6,- 40], 
+				[-  0,- 50] 
+			];
 		
-		moveToOrigoC( dc, (+  0 * Math.cos(i) ) - (- 50 * Math.sin(i) ), +  0 * Math.sin(i) - 50 * Math.cos(i) );    	
-		lineToOrigoC( dc, (+  6 * Math.cos(i) ) - (- 40 * Math.sin(i) ), +  6 * Math.sin(i) - 40 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 10 * Math.cos(i) ) - (- 30 * Math.sin(i) ), + 10 * Math.sin(i) - 30 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 13 * Math.cos(i) ) - (- 20 * Math.sin(i) ), + 13 * Math.sin(i) - 20 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 15 * Math.cos(i) ) - (- 10 * Math.sin(i) ), + 15 * Math.sin(i) - 10 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 16 * Math.cos(i) ) - (-  0 * Math.sin(i) ), + 16 * Math.sin(i) -  0 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 17 * Math.cos(i) ) - (+ 20 * Math.sin(i) ), + 17 * Math.sin(i) + 20 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 17 * Math.cos(i) ) - (+ 30 * Math.sin(i) ), + 17 * Math.sin(i) + 30 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 16 * Math.cos(i) ) - (+ 40 * Math.sin(i) ), + 16 * Math.sin(i) + 40 * Math.cos(i) );
-		lineToOrigoC( dc, (+ 13 * Math.cos(i) ) - (+ 50 * Math.sin(i) ), + 13 * Math.sin(i) + 50 * Math.cos(i) );
-		lineToOrigoC( dc, (- 13 * Math.cos(i) ) - (+ 50 * Math.sin(i) ), - 13 * Math.sin(i) + 50 * Math.cos(i) );
-		lineToOrigoC( dc, (- 16 * Math.cos(i) ) - (+ 40 * Math.sin(i) ), - 16 * Math.sin(i) + 40 * Math.cos(i) );
-		lineToOrigoC( dc, (- 17 * Math.cos(i) ) - (+ 30 * Math.sin(i) ), - 17 * Math.sin(i) + 30 * Math.cos(i) );
-		lineToOrigoC( dc, (- 17 * Math.cos(i) ) - (+ 20 * Math.sin(i) ), - 17 * Math.sin(i) + 20 * Math.cos(i) );
-		lineToOrigoC( dc, (- 16 * Math.cos(i) ) - (-  0 * Math.sin(i) ), - 16 * Math.sin(i) -  0 * Math.cos(i) );
-		lineToOrigoC( dc, (- 15 * Math.cos(i) ) - (- 10 * Math.sin(i) ), - 15 * Math.sin(i) - 10 * Math.cos(i) );
-		lineToOrigoC( dc, (- 13 * Math.cos(i) ) - (- 20 * Math.sin(i) ), - 13 * Math.sin(i) - 20 * Math.cos(i) );
-		lineToOrigoC( dc, (- 10 * Math.cos(i) ) - (- 30 * Math.sin(i) ), - 10 * Math.sin(i) - 30 * Math.cos(i) );
-		lineToOrigoC( dc, (-  6 * Math.cos(i) ) - (- 40 * Math.sin(i) ), -  6 * Math.sin(i) - 40 * Math.cos(i) );
-		lineToOrigoC( dc, (-  0 * Math.cos(i) ) - (- 50 * Math.sin(i) ), -  0 * Math.sin(i) - 50 * Math.cos(i) );    	
-     	
+		var X = arrayBoat[0][0];
+		var Y = arrayBoat[0][1];
+		var COS = Math.cos(WD);
+		var SIN = Math.sin(WD);
+
+		moveToOrigoC( dc, (X*COS) - (Y*SIN), (X*SIN) + (Y*COS) );    	
+		
+		for( var i = 1; i < 20; i += 1 ) {
+			X = arrayBoat[i][0];
+			Y = arrayBoat[i][1];
+			lineToOrigoC( dc, (X*COS) - (Y*SIN), (X*SIN) + (Y*COS) );
+		}
 	
     }
 

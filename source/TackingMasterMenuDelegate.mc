@@ -3,7 +3,9 @@ using Toybox.System;
 using Toybox.Position as Position;
 using Toybox.Math;
 
-// Find COG 
+
+// Find COG / Heading
+//===================
 function getCOG() {
 	var positionInfo = Position.getInfo();
 	var Heading_deg = 0;
