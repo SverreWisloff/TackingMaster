@@ -6,8 +6,8 @@ using Toybox.Math;
 // Find COG 
 function getCOG() {
 	var positionInfo = Position.getInfo();
-	var Heading_deg = 888;
-	if(positionInfo.heading!=null){
+	var Heading_deg = 0;
+	if(positionInfo!=null){
 		Heading_deg = (positionInfo.heading)/Math.PI*180;
 	}
 	return Heading_deg;
