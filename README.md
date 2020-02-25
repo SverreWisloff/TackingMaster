@@ -9,15 +9,15 @@ You can then also observe wind turns, see the consequences and make good decisio
 
 ## Use
 
-The direction where the wind comes from is up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The red dot show your course over ground direction.
+The direction where the wind comes from is allways facing up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The red dot show your course over ground direction.
 
-With the up and down buttons you can adjust the wind direction with 5 degree increments.
+The up and down buttons can be used for adjusting the wind direction with 5 degree increments.
 
-By pressing menu (hold up button) the wind direction can be defined on on either port and starboard close-hauled direction.
+By pressing menu (hold up button) the wind direction can be defined on on either port, or starboard close-hauled direction.
 
 The tack angle is set to 90 degrees.
 
-![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Screenshot%20TackingMaster.png?raw=true)
+![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Screenshot%20TackingMaster%2011.png?raw=true)
 
 
 ## Versions
