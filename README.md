@@ -29,6 +29,8 @@ The tack angle is set to 90 degrees.
  
 1.1:
  - Small fixes
+ - Update wind-arrow
+ - Add boat to illustrate heading
 
  
 ## Please use it if you find it convinient
