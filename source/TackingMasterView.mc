@@ -211,15 +211,18 @@ GogHistory.Print();
 		drawCogDot(dc);
 
 		// Draw COG-text
-//        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-//        dc.drawText(m_width/2, m_height/2+10, Graphics.FONT_TINY, m_COG_deg.toNumber() + " deg", Graphics.TEXT_JUSTIFY_CENTER);
 		var fontHeight = dc.getFontHeight(Graphics.FONT_TINY); 
+		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
+		dc.fillCircle(m_width/2, m_height/2, 25);
+		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLUE);
+        dc.drawCircle(m_width/2, m_height/2, 25);
+        
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.drawText(m_width/2, m_height/2-fontHeight/2, Graphics.FONT_TINY, m_COG_deg.toNumber() , Graphics.TEXT_JUSTIFY_CENTER);
 
 		// Draw SOG-text
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(m_width/2, m_height/2+40, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+        dc.drawText(m_width/2, m_height/2+35, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 
 		// Draw Time-text
 		var myTime = System.getClockTime(); // ClockTime object
