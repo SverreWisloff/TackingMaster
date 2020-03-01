@@ -5,7 +5,7 @@ _A sailing-app for Garmin watch_
 
 This is a simple app for Garmin watches that provides useful information for sailboats that do not have wind instruments.
 Set wind direction and read close-hauled direction, heading direction and speed.
-You can then also observe wind turns, see the consequences and make good decisions.
+Observe wind turns, and see the consequences and make good decisions.
 
 ## Use
 
@@ -13,12 +13,13 @@ The direction where the wind comes from is allways facing up on the clock, and t
 
 The up and down buttons can be used for adjusting the wind direction with 5 degree increments.
 
-By pressing menu (hold up button) the wind direction can be defined on on either port, or starboard close-hauled direction.
+By pressing menu (hold up button) the wind direction can be defined on either port, or starboard close-hauled direction.
 
-The tack angle is set to 90 degrees.
+The tack angle is defined to 90 degrees.
 
-![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/TackingMaster%20on%20watch%2011.png?raw=true)
-
+![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/TackingMaster%20on%20watch%2012.png?raw=true)
+![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Menu%2012.png?raw=true)
+![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Settings%2012.png?raw=true)
 
 ## Versions
 
@@ -32,7 +33,7 @@ The tack angle is set to 90 degrees.
  - Update wind-arrow
  - Add boat to illustrate heading
  
- 1.XX
+ 1.2
  - New Menu-system
  - Add settings for drawing N+E+S+W, and drawing the boat
 
