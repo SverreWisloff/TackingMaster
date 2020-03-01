@@ -2,7 +2,7 @@ using Toybox.Application;
 using Toybox.WatchUi;
 using Toybox.System as System;
 using Toybox.Application as App;
-using Toybox.Position;
+using Toybox.Position as Position;
 
 //Main master-class
 class TackingMasterApp extends Application.AppBase {
@@ -16,7 +16,7 @@ class TackingMasterApp extends Application.AppBase {
 
     // onStart() is called on application start up 
     function onStart(state) {
-//        System.println("TackingMasterView.onUpdate");
+//        System.println("TackingMasterView.onUpdate"); 
 
         //Start GPS
         Position.enableLocationEvents( Position.LOCATION_CONTINUOUS, method(:onPosition) );

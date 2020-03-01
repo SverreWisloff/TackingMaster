@@ -41,13 +41,31 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
             var settingsMenu = new WatchUi.Menu2({:title=>WatchUi.loadResource(Rez.Strings.menu_label_Settings)});
 
     		var bDrawBoat = Application.Storage.getValue("DrawBoat");   	
+    		if (bDrawBoat!=false) {
+    			bDrawBoat = true;
+    		} else {	
+    			bDrawBoat = false;
+			}
 //        	System.println("Menu2SampleSubMenuDelegate::initialize - DrawBoat=" + bDrawBoat );
-            settingsMenu.addItem(new WatchUi.ToggleMenuItem(WatchUi.loadResource(Rez.Strings.menu_label_DrawBoat), {:enabled=>WatchUi.loadResource(Rez.Strings.menu_label_Show), :disabled=>WatchUi.loadResource(Rez.Strings.menu_label_Hide)}, "idDrawBoat", bDrawBoat, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+var strDrawBoat = WatchUi.loadResource(Rez.Strings.menu_label_DrawBoat);
+var strShow = WatchUi.loadResource(Rez.Strings.menu_label_Show);
+var strHide = WatchUi.loadResource(Rez.Strings.menu_label_Hide);
+
+
+            settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawBoat, {:enabled=>strShow, :disabled=>strHide}, "idDrawBoat", bDrawBoat, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+            //toggleMenu.addItem(new WatchUi.ToggleMenuItem  ("Item 1", {:enabled=>"Left Toggle: on", :disabled=>"Left Toggle: off"}, "left", false, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+            
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
 
-    		var bDrawNWSE = Application.Storage.getValue("DrawNWSE");   	
+    		var bDrawNWSE = Application.Storage.getValue("DrawNWSE");   
+    		if (bDrawNWSE!=false) {
+    			bDrawNWSE = true;
+    		} else {	
+    			bDrawNWSE = false;
+			}
 //        	System.println("Menu2SampleSubMenuDelegate::initialize - DrawNWSE=" + bDrawNWSE );
-            settingsMenu.addItem(new WatchUi.ToggleMenuItem(WatchUi.loadResource(Rez.Strings.menu_label_DrawNWSE), {:enabled=>WatchUi.loadResource(Rez.Strings.menu_label_Show), :disabled=>WatchUi.loadResource(Rez.Strings.menu_label_Hide)}, "idDrawNWSE", bDrawNWSE, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+var strDrawNWSE = WatchUi.loadResource(Rez.Strings.menu_label_DrawNWSE);
+            settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawNWSE, {:enabled=>strShow, :disabled=>strHide}, "idDrawNWSE", bDrawNWSE, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
 
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
 /*

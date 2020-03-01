@@ -24,6 +24,43 @@ function reduse_deg(deg) {
 	return deg;
 }
 
+/*
+class Dynamics {
+
+	var m_Size=10;
+//	var m_aCog = [];
+	var m_NowPointer;
+
+    function initialize() {
+		System.println("Dynamics::initialize()" );
+		for( var i = 0; i < m_Size; i += 1 ) {
+			m_aCog.add(0.001);
+		}
+		//m_Size = m_aCog.size();
+		me.m_NowPointer=0;
+	}
+	
+	function push(newCog)
+	{
+	/*	System.println("Dynamics::push(" + newCog + ")");
+		m_NowPointer+=1;
+		if (m_NowPointer>=m_Size){m_NowPointer=0;}
+
+		m_aCog[m_NowPointer] = newCog;
+	}
+
+	function Print()
+	{
+		System.println("Dynamics::Print()" );
+		System.println("Dynamics::Print() - m_NowPointer=" + me.m_NowPointer );
+		System.println("Dynamics::Print() - Size=" + m_aCog.size() );
+		for( var i = 0; i < m_aCog.size(); i += 1 ) {
+        	System.println("i=" + i + " m_aCog[i]=" + m_aCog[i]);
+        }
+	}
+
+}
+*/
 
 class TackingMasterView extends WatchUi.View {
 
@@ -46,6 +83,17 @@ class TackingMasterView extends WatchUi.View {
         View.initialize();
 //        System.println("TackingMasterView.initialize");
         m_screenShape = System.getDeviceSettings().screenShape;
+
+
+/*
+var GogHistory = new TackingMasterDynamics();
+GogHistory.push(3.1);
+GogHistory.push(3.2);
+GogHistory.push(4.1);
+GogHistory.push(4.2);
+GogHistory.Print();
+*/
+
 
 		// Get the WindDirection from the settings-storage
         var app = App.getApp();
@@ -163,8 +211,11 @@ class TackingMasterView extends WatchUi.View {
 		drawCogDot(dc);
 
 		// Draw COG-text
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(m_width/2, m_height/2+10, Graphics.FONT_TINY, m_COG_deg.toNumber() + " deg", Graphics.TEXT_JUSTIFY_CENTER);
+//        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+//        dc.drawText(m_width/2, m_height/2+10, Graphics.FONT_TINY, m_COG_deg.toNumber() + " deg", Graphics.TEXT_JUSTIFY_CENTER);
+		var fontHeight = dc.getFontHeight(Graphics.FONT_TINY); 
+        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+        dc.drawText(m_width/2, m_height/2-fontHeight/2, Graphics.FONT_TINY, m_COG_deg.toNumber() , Graphics.TEXT_JUSTIFY_CENTER);
 
 		// Draw SOG-text
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
@@ -188,7 +239,6 @@ class TackingMasterView extends WatchUi.View {
     // Draws the clock tick marks around the outside edges of the screen.
 	// ==========================================================================
     function drawHashMarks(dc) {
-
 		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_TRANSPARENT);
 		dc.setPenWidth(2);
 
@@ -197,15 +247,27 @@ class TackingMasterView extends WatchUi.View {
             var sX, sY;
             var eX, eY;
             var outerRad = m_width / 2;
-            var innerRad = outerRad - 8;
-            // Loop through each 15 minute block and draw tick marks.
-            for (var i = 0; i < 2 * Math.PI ; i += (Math.PI / 48)) {
+            var innerRad = outerRad - 9;
+            
+            // draw 10-deg tick marks.
+            for (var i = 0; i < 2 * Math.PI ; i += (Math.PI / 18)) {
                 sY = outerRad + innerRad * Math.sin(i);
                 eY = outerRad + outerRad * Math.sin(i);
                 sX = outerRad + innerRad * Math.cos(i);
                 eX = outerRad + outerRad * Math.cos(i);
                 dc.drawLine(sX, sY, eX, eY);
             }
+
+            // draw 10-deg tick marks.
+            innerRad = outerRad - 5;
+            for (var i = 0; i < 2 * Math.PI ; i += (Math.PI / 90)) {
+                sY = outerRad + innerRad * Math.sin(i);
+                eY = outerRad + outerRad * Math.sin(i);
+                sX = outerRad + innerRad * Math.cos(i);
+                eX = outerRad + outerRad * Math.cos(i);
+                dc.drawLine(sX, sY, eX, eY);
+            }
+            
         } else {
             var coords = [0, m_width / 4, (3 * m_width) / 4, m_width];
             for (var i = 0; i < coords.size(); i += 1) {
