@@ -1,8 +1,0 @@
-<strings>
-    <string id="AppName">TackingMaster</string>
-
-    <string id="prompt">Click the menu button</string>
-
-    <string id="menu_label_1">Set port tack</string>
-    <string id="menu_label_2">Set starboard tack</string>
-</strings>

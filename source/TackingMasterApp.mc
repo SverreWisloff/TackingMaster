@@ -27,6 +27,8 @@ class TackingMasterApp extends Application.AppBase {
 		if (WindDirection==null){
 			WindDirection = 180;
 		}
+		
+		
      
     }
 

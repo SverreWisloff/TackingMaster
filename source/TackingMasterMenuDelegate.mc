@@ -38,16 +38,16 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
         	Application.Storage.setValue("WindDirection", WindDirection);
 	        WatchUi.popView(WatchUi.SLIDE_DOWN);
         } else if ( item.getId().equals("idSettings") ) {
-            var settingsMenu = new WatchUi.Menu2({:title=>"Settings"});
+            var settingsMenu = new WatchUi.Menu2({:title=>WatchUi.loadResource(Rez.Strings.menu_label_Settings)});
 
     		var bDrawBoat = Application.Storage.getValue("DrawBoat");   	
-        	System.println("Menu2SampleSubMenuDelegate::initialize - DrawBoat=" + bDrawBoat );
-            settingsMenu.addItem(new WatchUi.ToggleMenuItem("Draw boat", {:enabled=>"show boat", :disabled=>"hide boat"}, "idDrawBoat", bDrawBoat, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+//        	System.println("Menu2SampleSubMenuDelegate::initialize - DrawBoat=" + bDrawBoat );
+            settingsMenu.addItem(new WatchUi.ToggleMenuItem(WatchUi.loadResource(Rez.Strings.menu_label_DrawBoat), {:enabled=>WatchUi.loadResource(Rez.Strings.menu_label_Show), :disabled=>WatchUi.loadResource(Rez.Strings.menu_label_Hide)}, "idDrawBoat", bDrawBoat, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
 
     		var bDrawNWSE = Application.Storage.getValue("DrawNWSE");   	
-        	System.println("Menu2SampleSubMenuDelegate::initialize - DrawNWSE=" + bDrawNWSE );
-            settingsMenu.addItem(new WatchUi.ToggleMenuItem("Draw N+E+S+W", {:enabled=>"show north", :disabled=>"hide north"}, "idDrawNWSE", bDrawNWSE, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+//        	System.println("Menu2SampleSubMenuDelegate::initialize - DrawNWSE=" + bDrawNWSE );
+            settingsMenu.addItem(new WatchUi.ToggleMenuItem(WatchUi.loadResource(Rez.Strings.menu_label_DrawNWSE), {:enabled=>WatchUi.loadResource(Rez.Strings.menu_label_Show), :disabled=>WatchUi.loadResource(Rez.Strings.menu_label_Hide)}, "idDrawNWSE", bDrawNWSE, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
 
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
 /*
@@ -74,13 +74,13 @@ class Menu2SampleSubMenuDelegate extends WatchUi.Menu2InputDelegate {
 
         //Draw Boat
         var MenuItem = item.getId();
-        System.println("Menu2SampleSubMenuDelegate::onSelect - iD=" + MenuItem + " enabled=" + item.isEnabled() );
+        //System.println("Menu2SampleSubMenuDelegate::onSelect - iD=" + MenuItem + " enabled=" + item.isEnabled() );
         if (MenuItem.equals("idDrawBoat")){
-	        System.println("Menu2SampleSubMenuDelegate::onSelect::DrawBoat");
+	        //System.println("Menu2SampleSubMenuDelegate::onSelect::DrawBoat");
     		Application.Storage.setValue("DrawBoat", item.isEnabled()); 
     	}
         if (MenuItem.equals("idDrawNWSE")){
-	        System.println("Menu2SampleSubMenuDelegate::onSelect::DrawNWSE");
+	        //System.println("Menu2SampleSubMenuDelegate::onSelect::DrawNWSE");
     		Application.Storage.setValue("DrawNWSE", item.isEnabled()); 
 		}    	
 
@@ -88,12 +88,12 @@ class Menu2SampleSubMenuDelegate extends WatchUi.Menu2InputDelegate {
     }
 
     function onBack() {
-        System.println("Menu2SampleSubMenuDelegate::onBack");
+        //System.println("Menu2SampleSubMenuDelegate::onBack");
         WatchUi.popView(WatchUi.SLIDE_DOWN);
     }
 
     function onDone() {
-        System.println("Menu2SampleSubMenuDelegate::onDone");
+        //System.println("Menu2SampleSubMenuDelegate::onDone");
         WatchUi.popView(WatchUi.SLIDE_DOWN);
     }
 }

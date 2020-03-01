@@ -1,0 +1,18 @@
+<strings>
+    <string id="AppName">TackingMaster</string>
+
+    <string id="prompt">Er du klar?</string>
+    <string id="menu_label_Menu">Meny</string>
+
+    <string id="menu_label_DrawNWSE">Tegn himmelretninger</string>
+    <string id="menu_label_DrawBoat">Tegn båt</string>
+
+    <string id="menu_label_Set_Direction">Sett kryss-retning</string>
+    <string id="menu_label_Port">Babord halser</string>
+    <string id="menu_label_Starb">Styrb. halser</string>
+    
+    <string id="menu_label_Show">Vis</string>
+    <string id="menu_label_Hide">Skjul</string>
+
+    <string id="menu_label_Settings">Innstillinger</string>
+</strings>

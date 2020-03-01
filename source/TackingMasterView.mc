@@ -229,16 +229,27 @@ class TackingMasterView extends WatchUi.View {
     	}
     	
 		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
+		var fontHeight = dc.getFontHeight(Graphics.FONT_TINY); 
 
 		var i = -(m_WindDirection+90)/180.0 * Math.PI;
         var X = ((m_width/2)-20) * Math.cos(i);
         var Y = ((m_height/2)-20) * Math.sin(i);
-		
-		var fontHeight = dc.getFontHeight(Graphics.FONT_TINY); 
-		//12 = Halv font-høyde
-		
     	dc.drawText(X + (m_width/2), Y + (m_height/2) - fontHeight/2, Graphics.FONT_TINY, "N", Graphics.TEXT_JUSTIFY_CENTER);
  		
+		i = -(m_WindDirection)/180.0 * Math.PI;
+        X = ((m_width/2)-20) * Math.cos(i);
+        Y = ((m_height/2)-20) * Math.sin(i);
+    	dc.drawText(X + (m_width/2), Y + (m_height/2) - fontHeight/2, Graphics.FONT_TINY, "E", Graphics.TEXT_JUSTIFY_CENTER);
+
+		i = -(m_WindDirection-90)/180.0 * Math.PI;
+        X = ((m_width/2)-20) * Math.cos(i);
+        Y = ((m_height/2)-20) * Math.sin(i);
+    	dc.drawText(X + (m_width/2), Y + (m_height/2) - fontHeight/2, Graphics.FONT_TINY, "S", Graphics.TEXT_JUSTIFY_CENTER);
+
+		i = -(m_WindDirection+180)/180.0 * Math.PI;
+        X = ((m_width/2)-20) * Math.cos(i);
+        Y = ((m_height/2)-20) * Math.sin(i);
+    	dc.drawText(X + (m_width/2), Y + (m_height/2) - fontHeight/2, Graphics.FONT_TINY, "W", Graphics.TEXT_JUSTIFY_CENTER);
     }
 
     //=====================
@@ -272,12 +283,6 @@ class TackingMasterView extends WatchUi.View {
     	//Draw Boat
     	dc.setPenWidth(5);
     	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
-
-/*		var arrayBoat= new [20];
-		// Initialize the sub-arrays
-		for( var i = 0; i < 20; i += 1 ) {
-		    arrayBoat[i] = new [2];
-		}	*/	
 
 		var arrayBoat = [ 
 				[+  0,- 50], 

@@ -1,9 +1,0 @@
-<strings>
-    <string id="AppName">TackingMaster</string>
-
-    <string id="prompt">Click the menu button</string>
-
-    <string id="menu_label_1">Babord halser</string>
-    <string id="menu_label_2">Styrb. halser</string>
-    <string id="menu_label_3">Innstillinger</string>
-</strings>

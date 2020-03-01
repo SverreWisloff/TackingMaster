@@ -21,9 +21,14 @@
 			<location>C:/Users/sw/workspace/TackingMaster/README.md</location>
 		</link>
 		<link>
-			<name>resources-nob/strings.xml</name>
+			<name>resources-eng/strings-eng.xml</name>
 			<type>1</type>
-			<location>C:/Users/sw/workspace/TackingMaster/resources-nob/strings.xml</location>
+			<location>C:/Users/sw/workspace/TackingMaster/resources-eng/strings-eng.xml</location>
+		</link>
+		<link>
+			<name>resources-nob/strings-nob.xml</name>
+			<type>1</type>
+			<location>C:/Users/sw/workspace/TackingMaster/resources-nob/strings-nob.xml</location>
 		</link>
 		<link>
 			<name>resources/drawables/TackingMaster.png</name>

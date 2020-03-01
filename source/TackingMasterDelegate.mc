@@ -17,9 +17,9 @@ class TackingMasterDelegate extends WatchUi.BehaviorDelegate {
         var menu = new WatchUi.Menu2({:title=>new DrawableMenuTitle()});
 
         // Add menu items for demonstrating toggles, checkbox and icon menu items
-        menu.addItem(new WatchUi.MenuItem("Port", "Set close-hauled direction", "idSetPortWD", null));
-        menu.addItem(new WatchUi.MenuItem("Starboard", "Set close-hauled direction", "idSetStarbWD", null));
-        menu.addItem(new WatchUi.MenuItem("Settings", null, "idSettings", null));
+        menu.addItem(new WatchUi.MenuItem(WatchUi.loadResource(Rez.Strings.menu_label_Port), WatchUi.loadResource(Rez.Strings.menu_label_Set_Direction), "idSetPortWD", null));
+        menu.addItem(new WatchUi.MenuItem(WatchUi.loadResource(Rez.Strings.menu_label_Starb), WatchUi.loadResource(Rez.Strings.menu_label_Set_Direction), "idSetStarbWD", null));
+        menu.addItem(new WatchUi.MenuItem(WatchUi.loadResource(Rez.Strings.menu_label_Settings), null, "idSettings", null));
         WatchUi.pushView(menu, new TackingMasterMenuDelegate(), WatchUi.SLIDE_UP );
         return true;
     }
@@ -68,9 +68,10 @@ class DrawableMenuTitle extends WatchUi.Drawable {
     // Draw the application icon and main menu title
     function draw(dc) {
         var spacing = 2;
+        var strMenu=WatchUi.loadResource(Rez.Strings.menu_label_Menu);
         var appIcon = WatchUi.loadResource(Rez.Drawables.LauncherIcon);
         var bitmapWidth = appIcon.getWidth();
-        var labelWidth = dc.getTextWidthInPixels("Menu", Graphics.FONT_MEDIUM);
+        var labelWidth = dc.getTextWidthInPixels(strMenu, Graphics.FONT_MEDIUM);
 
         var bitmapX = (dc.getWidth() - (bitmapWidth + spacing + labelWidth)) / 2;
         var bitmapY = (dc.getHeight() - appIcon.getHeight()) / 2;
@@ -83,6 +84,6 @@ class DrawableMenuTitle extends WatchUi.Drawable {
 
         dc.drawBitmap(bitmapX, bitmapY, appIcon);
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(labelX, labelY, Graphics.FONT_MEDIUM, "Menu", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+        dc.drawText(labelX, labelY, Graphics.FONT_MEDIUM, strMenu, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
     }
 }

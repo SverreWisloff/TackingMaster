@@ -1,9 +1,15 @@
 <strings>
     <string id="AppName">TackingMaster</string>
 
-    <string id="prompt">Click the menu button</string>
+    <string id="prompt">Are you ready?</string>
+    <string id="menu_label_1">Menu 1</string>
 
-    <string id="menu_label_1">Set port tack</string>
-    <string id="menu_label_2">Set starboard tack</string>
-    <string id="menu_label_3">Settings</string>
+    <string id="menu_label_DrawNWSE">XXDraw N+E+S+W</string>
+    <string id="menu_label_DrawBoat">XXDraw boat</string>
+
+    <string id="menu_label_Set_Direction">XXSet close-hauled direction</string>
+    <string id="menu_label_Port">XXPort</string>
+    <string id="menu_label_Starb">XXStarboard</string>
+
+    <string id="menu_label_Settings">XXSettings</string>
 </strings>
