@@ -39,6 +39,8 @@ class TackingMasterView extends WatchUi.View {
     var m_CogDotSize = 8;
 	var m_COG_deg;
 	var m_Speed_kn;
+	var m_bDrawBoat;
+	var m_bDrawNWSE;
 
     function initialize() {
         View.initialize();
@@ -54,6 +56,12 @@ class TackingMasterView extends WatchUi.View {
         }
         Application.Storage.setValue("WindDirection", WindDirection);
 //        System.println("TackingMasterView.initialize - WindDirection=" + WindDirection);
+   		
+   		m_bDrawBoat = Application.Storage.getValue("DrawBoat");
+   		if (m_bDrawBoat==null){m_bDrawBoat = true;}   	
+   		
+   		m_bDrawNWSE = Application.Storage.getValue("DrawNWSE");
+   		if (m_bDrawNWSE==null){m_bDrawBoat = false;}   	
     }
 
     //=====================
@@ -73,7 +81,14 @@ class TackingMasterView extends WatchUi.View {
     // the state of this View and prepare it to be shown. This includes
     // loading resources into memory. 
     //=====================
-    function onShow() {
+    function onShow() { 
+    	//Update after changing settings
+   		m_bDrawBoat = Application.Storage.getValue("DrawBoat");
+   		if (m_bDrawBoat==null){m_bDrawBoat = true;}
+
+   		m_bDrawNWSE = Application.Storage.getValue("DrawNWSE");
+   		if (m_bDrawNWSE==null){m_bDrawNWSE = false;}
+   		
     }
 
     function setPosition(info) {
@@ -209,6 +224,10 @@ class TackingMasterView extends WatchUi.View {
     // Draws North 
     //=====================
     function drawNorth(dc) {
+    	if (m_bDrawNWSE==false){
+    		return;
+    	}
+    	
 		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
 
 		var i = -(m_WindDirection+90)/180.0 * Math.PI;
@@ -241,13 +260,17 @@ class TackingMasterView extends WatchUi.View {
     // Draws  Boat
     //=====================
     function drawBoat(dc) {
-
+    
+    	if (!m_bDrawBoat){
+	    	return;
+		}
+		
 		// X,Y refers to origo i face-centre
 		var WD = -(m_WindDirection+90-m_COG_deg)/180.0 * Math.PI;
 		WD = WD + Math.PI/2;
 		
     	//Draw Boat
-    	dc.setPenWidth(3);
+    	dc.setPenWidth(5);
     	dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_TRANSPARENT);
 
 /*		var arrayBoat= new [20];

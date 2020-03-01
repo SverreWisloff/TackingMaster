@@ -5,4 +5,5 @@
 
     <string id="menu_label_1">Set port tack</string>
     <string id="menu_label_2">Set starboard tack</string>
+    <string id="menu_label_3">Settings</string>
 </strings>

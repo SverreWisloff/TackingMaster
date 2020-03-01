@@ -31,6 +31,10 @@ The tack angle is set to 90 degrees.
  - Small fixes
  - Update wind-arrow
  - Add boat to illustrate heading
+ 
+ 1.XX
+ - New Menu-system
+ - Add settings for drawing N+E+S+W, and drawing the boat
 
  
 ## Please use it if you find it convinient
