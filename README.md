@@ -35,7 +35,11 @@ The tack angle is defined to 90 degrees.
  
  1.2
  - New Menu-system
- - Add settings for drawing N+E+S+W, and drawing the boat
+ - Add settings for drawing N+E+S+W 
+ - Add settings for drawing the boat
+
+ 1.3
+ - Course more in fokus
 
  
 ## Please use it if you find it convinient

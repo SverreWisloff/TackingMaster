@@ -24,43 +24,6 @@ function reduse_deg(deg) {
 	return deg;
 }
 
-/*
-class Dynamics {
-
-	var m_Size=10;
-//	var m_aCog = [];
-	var m_NowPointer;
-
-    function initialize() {
-		System.println("Dynamics::initialize()" );
-		for( var i = 0; i < m_Size; i += 1 ) {
-			m_aCog.add(0.001);
-		}
-		//m_Size = m_aCog.size();
-		me.m_NowPointer=0;
-	}
-	
-	function push(newCog)
-	{
-	/*	System.println("Dynamics::push(" + newCog + ")");
-		m_NowPointer+=1;
-		if (m_NowPointer>=m_Size){m_NowPointer=0;}
-
-		m_aCog[m_NowPointer] = newCog;
-	}
-
-	function Print()
-	{
-		System.println("Dynamics::Print()" );
-		System.println("Dynamics::Print() - m_NowPointer=" + me.m_NowPointer );
-		System.println("Dynamics::Print() - Size=" + m_aCog.size() );
-		for( var i = 0; i < m_aCog.size(); i += 1 ) {
-        	System.println("i=" + i + " m_aCog[i]=" + m_aCog[i]);
-        }
-	}
-
-}
-*/
 
 class TackingMasterView extends WatchUi.View {
 
@@ -78,22 +41,14 @@ class TackingMasterView extends WatchUi.View {
 	var m_Speed_kn;
 	var m_bDrawBoat;
 	var m_bDrawNWSE;
+	var m_bDrawSpeedPlot;
+	var m_boatScale=1.2;
+	var m_SpeedHistory = new TackingMasterDynamics();
 
     function initialize() {
         View.initialize();
 //        System.println("TackingMasterView.initialize");
         m_screenShape = System.getDeviceSettings().screenShape;
-
-
-/*
-var GogHistory = new TackingMasterDynamics();
-GogHistory.push(3.1);
-GogHistory.push(3.2);
-GogHistory.push(4.1);
-GogHistory.push(4.2);
-GogHistory.Print();
-*/
-
 
 		// Get the WindDirection from the settings-storage
         var app = App.getApp();
@@ -109,7 +64,10 @@ GogHistory.Print();
    		if (m_bDrawBoat==null){m_bDrawBoat = true;}   	
    		
    		m_bDrawNWSE = Application.Storage.getValue("DrawNWSE");
-   		if (m_bDrawNWSE==null){m_bDrawBoat = false;}   	
+   		if (m_bDrawNWSE==null){m_bDrawNWSE = false;}   	
+
+   		m_bDrawSpeedPlot = Application.Storage.getValue("DrawSpeedPlot");
+   		if (m_bDrawSpeedPlot==null){m_bDrawSpeedPlot = true;}   	
     }
 
     //=====================
@@ -137,6 +95,8 @@ GogHistory.Print();
    		m_bDrawNWSE = Application.Storage.getValue("DrawNWSE");
    		if (m_bDrawNWSE==null){m_bDrawNWSE = false;}
    		
+   		m_bDrawSpeedPlot = Application.Storage.getValue("DrawSpeedPlot");
+   		if (m_bDrawSpeedPlot==null){m_bDrawSpeedPlot = true;}
     }
 
     function setPosition(info) {
@@ -176,6 +136,11 @@ GogHistory.Print();
 		else {
 			m_Speed_kn = 0;
 		}
+
+		if (m_Speed_kn>-0.000001 && m_Speed_kn<99.9){
+				m_SpeedHistory.push(m_Speed_kn);
+		}
+
 /*        if (m_posnInfo!=null){
         	var acc=0;
         	acc = m_posnInfo.accuracy;
@@ -210,6 +175,9 @@ GogHistory.Print();
         // Draw COG-circle 
 		drawCogDot(dc);
 
+		//Draw speed-curve and SOG-text
+		drawSpeedPlot(dc);
+
 		// Draw COG-text
 		var fontHeight = dc.getFontHeight(Graphics.FONT_TINY); 
 		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
@@ -220,9 +188,9 @@ GogHistory.Print();
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.drawText(m_width/2, m_height/2-fontHeight/2, Graphics.FONT_TINY, m_COG_deg.toNumber() , Graphics.TEXT_JUSTIFY_CENTER);
 
-		// Draw SOG-text
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(m_width/2, m_height/2+35, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+		// Draw SOG
+        //dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        //dc.drawText(m_width/2, m_height/2+35, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 
 		// Draw Time-text
 		var myTime = System.getClockTime(); // ClockTime object
@@ -371,6 +339,13 @@ GogHistory.Print();
 				[-  6,- 40], 
 				[-  0,- 50] 
 			];
+
+		//Scaling the size of the boat
+		m_boatScale=1.2;
+		for (var i=0; i<arrayBoat.size(); i+=1){
+			arrayBoat[i][0] = arrayBoat[i][0] * m_boatScale;
+			arrayBoat[i][1] = arrayBoat[i][1] * m_boatScale;
+		}
 		
 		var X = arrayBoat[0][0];
 		var Y = arrayBoat[0][1];
@@ -386,6 +361,25 @@ GogHistory.Print();
 		}
 	
     }
+
+    //================================
+    // Draws speed-histoy-plot
+	//================================
+	function drawSpeedPlot(dc){
+		var plotWidth=90;
+		var plotHeight=33;
+
+		dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
+
+    	if (m_bDrawSpeedPlot){
+			m_SpeedHistory.drawPlot(m_width/2-plotWidth/2-40, m_height/2+35, plotWidth, plotHeight, dc);
+
+			dc.drawText(m_width*0.72, m_height/2+33, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+		} else {
+			dc.drawText(m_width/2, m_height/2+33, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+		}
+	}
+
 
 	// ==========================================
 	// DrawLine functions in origo ref-syst
