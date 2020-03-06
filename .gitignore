@@ -6,3 +6,6 @@ TODO.txt
 IQ files/TackingMaster.iq
 bin/linkedResources.jungle
 TODO.txt
+properties.mk
+.vscode/launch.json
+makefile
