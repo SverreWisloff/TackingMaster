@@ -27,17 +27,20 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
             // When the toggle menu item is selected, push a new menu that demonstrates
             // left and right toggles with automatic substring toggles.
             //Set port tack
+            System.println("TackingMasterMenuDelegate::onSelect() - idSetPortWD");
 	        var COG = getCOG();
 	        var WindDirection = COG-45;
         	Application.Storage.setValue("WindDirection", WindDirection);
 	        WatchUi.popView(WatchUi.SLIDE_DOWN);
         } else if ( item.getId().equals("idSetStarbWD") ) {
             //Set starboard tack
+            System.println("TackingMasterMenuDelegate::onSelect() - idSetStarbWD");
 	        var COG = getCOG();
 	        var WindDirection = COG+45;
         	Application.Storage.setValue("WindDirection", WindDirection);
 	        WatchUi.popView(WatchUi.SLIDE_DOWN);
         } else if ( item.getId().equals("idSettings") ) {
+            System.println("TackingMasterMenuDelegate::onSelect() - idSettings");
             var settingsMenu = new WatchUi.Menu2({:title=>WatchUi.loadResource(Rez.Strings.menu_label_Settings)});
 
 			//Get string resources for Settings-menu
@@ -45,6 +48,7 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
 			var strShow = WatchUi.loadResource(Rez.Strings.menu_label_Show);
 			var strHide = WatchUi.loadResource(Rez.Strings.menu_label_Hide);
 			var strDrawNWSE = WatchUi.loadResource(Rez.Strings.menu_label_DrawNWSE);
+			var strDrawSpeedPlot = WatchUi.loadResource(Rez.Strings.menu_label_DrawSpeedPlot);
 
     		// Get settings
     		var bDrawBoat = Application.Storage.getValue("DrawBoat");   	
@@ -53,11 +57,16 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
     		var bDrawNWSE = Application.Storage.getValue("DrawNWSE");   
     		if (bDrawNWSE!=false) {bDrawNWSE = true;} 
     			else {bDrawNWSE = false;}
+    		var bDrawSpeedPlot = Application.Storage.getValue("DrawSpeedPlot");   
+    		if (bDrawSpeedPlot!=false) {bDrawSpeedPlot = true;} 
+    			else {bDrawSpeedPlot = false;}
     			
 			//Build the settings-menu
             settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawBoat, {:enabled=>strShow, :disabled=>strHide}, "idDrawBoat", bDrawBoat, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
             settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawNWSE, {:enabled=>strShow, :disabled=>strHide}, "idDrawNWSE", bDrawNWSE, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+            WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
+            settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawSpeedPlot, {:enabled=>strShow, :disabled=>strHide}, "idDrawSpeedPlot", bDrawSpeedPlot, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
 /*
         } else {
@@ -67,6 +76,7 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
     }
     
     function onBack() {
+        System.println("TackingMasterMenuDelegate::onBack()");
         WatchUi.popView(WatchUi.SLIDE_DOWN);
     }
 
@@ -83,26 +93,32 @@ class Menu2SampleSubMenuDelegate extends WatchUi.Menu2InputDelegate {
 
         //Draw Boat
         var MenuItem = item.getId();
-        //System.println("Menu2SampleSubMenuDelegate::onSelect - iD=" + MenuItem + " enabled=" + item.isEnabled() );
+        System.println("Menu2SampleSubMenuDelegate::onSelect() - iD=" + MenuItem + " enabled=" + item.isEnabled() );
         if (MenuItem.equals("idDrawBoat")){
-	        //System.println("Menu2SampleSubMenuDelegate::onSelect::DrawBoat");
+	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawBoat");
     		Application.Storage.setValue("DrawBoat", item.isEnabled()); 
-    	}
-        if (MenuItem.equals("idDrawNWSE")){
-	        //System.println("Menu2SampleSubMenuDelegate::onSelect::DrawNWSE");
+    	} else if (MenuItem.equals("idDrawNWSE")){
+	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawNWSE");
     		Application.Storage.setValue("DrawNWSE", item.isEnabled()); 
-		}    	
+		} else if (MenuItem.equals("idDrawSpeedPlot")){
+	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawSpeedPlot");
+    		Application.Storage.setValue("DrawSpeedPlot", item.isEnabled()); 
+		} else {
+	        System.println("Menu2SampleSubMenuDelegate::onSelect()::else");
+        }
 
         WatchUi.requestUpdate();
     }
 
     function onBack() {
-        //System.println("Menu2SampleSubMenuDelegate::onBack");
+        System.println("Menu2SampleSubMenuDelegate::onBack()");
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
         WatchUi.popView(WatchUi.SLIDE_DOWN);
     }
 
     function onDone() {
-        //System.println("Menu2SampleSubMenuDelegate::onDone");
+        System.println("Menu2SampleSubMenuDelegate::onDone()");
         WatchUi.popView(WatchUi.SLIDE_DOWN);
     }
 }

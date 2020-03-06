@@ -4,12 +4,13 @@
     <string id="prompt">Are you ready?</string>
     <string id="menu_label_Menu">Menu</string>
 
-    <string id="menu_label_DrawNWSE">Draw N+E+S+W</string>
-    <string id="menu_label_DrawBoat">Draw boat</string>
+    <string id="menu_label_DrawNWSE">N+E+S+W</string>
+    <string id="menu_label_DrawBoat">Boat</string>
+    <string id="menu_label_DrawSpeedPlot">Speed history</string>
 
     <string id="menu_label_Set_Direction">Set close-hauled direction</string>
-    <string id="menu_label_Port">Port</string>
-    <string id="menu_label_Starb">Starboard</string>
+    <string id="menu_label_Port">Port tack</string>
+    <string id="menu_label_Starb">Starboard tack</string>
 
     <string id="menu_label_Show">Show</string>
     <string id="menu_label_Hide">Hide</string>

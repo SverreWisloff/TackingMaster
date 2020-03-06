@@ -4,8 +4,9 @@
     <string id="prompt">Er du klar?</string>
     <string id="menu_label_Menu">Meny</string>
 
-    <string id="menu_label_DrawNWSE">Tegn himmelretninger</string>
-    <string id="menu_label_DrawBoat">Tegn båt</string>
+    <string id="menu_label_DrawNWSE">Himmelretning</string>
+    <string id="menu_label_DrawBoat">Båt</string>
+    <string id="menu_label_DrawSpeedPlot">Fart-diagram</string>
 
     <string id="menu_label_Set_Direction">Sett kryss-retning</string>
     <string id="menu_label_Port">Babord halser</string>

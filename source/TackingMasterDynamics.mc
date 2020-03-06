@@ -115,10 +115,7 @@ class TackingMasterDynamics {
 	//width, height: width and height of plot
 	function drawPlot(DX, DY, width, height, dc)
 	{
-		var dotRadius=3;
-
 	    //Draw Rectangle / axis / fill black bakground
-
 //		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 //		dc.fillRectangle(DX, DY, width, height);
 //		dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_LT_GRAY);
@@ -135,7 +132,7 @@ class TackingMasterDynamics {
 	}
 
 	function plotCoordToWatchCoord(dc, DX, DY, width, height, dataMax, dataMin, data, time){
-		var dotRadius = 1;
+		var dotRadius = 2;
 		var WatchX;
 		var WatchY;
 

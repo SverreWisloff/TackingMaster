@@ -31,13 +31,14 @@ class TackingMasterDelegate extends WatchUi.BehaviorDelegate {
         
         if (keyEvent.getKey()==KEY_ENTER){
         	//Nothing happens on ENTER
+            System.println("KEY_ENTER");
         }
         else if (keyEvent.getKey()==KEY_UP){
 	        //Press UP to increase WindDirection with 5 degrees
 	        var WindDirection = Application.Storage.getValue("WindDirection");
         	WindDirection += 5;
         	Application.Storage.setValue("WindDirection", WindDirection);
-//	        System.println("TackingMasterView.initialize - WindDirection=" + WindDirection);
+	        System.println("TackingMasterView.initialize - WindDirection=" + WindDirection);
         }
         else if (keyEvent.getKey()==KEY_DOWN){
 	        //Press DOWN to decrease WindDirection with 5 degrees
@@ -47,6 +48,7 @@ class TackingMasterDelegate extends WatchUi.BehaviorDelegate {
 //	        System.println("TackingMasterView.initialize - WindDirection=" + WindDirection);
         }
         else if (keyEvent.getKey()==KEY_ESC){
+            System.println("KEY_ESC");
         }
     }
     
