@@ -350,7 +350,7 @@ class TackingMasterView extends WatchUi.View {
 		var X = arrayBoat[0][0];
 		var Y = arrayBoat[0][1];
 		var COS = Math.cos(WD);
-		var SIN = Math.sin(WD);
+		var SIN = Math.sin(WD); 
 
 		moveToOrigoC( dc, (X*COS) - (Y*SIN), (X*SIN) + (Y*COS) );    	
 		
@@ -366,16 +366,17 @@ class TackingMasterView extends WatchUi.View {
     // Draws speed-histoy-plot
 	//================================
 	function drawSpeedPlot(dc){
-		var plotWidth=90;
-		var plotHeight=33;
+		var plotWidth=m_width/2;
+		var plotHeight=35;
 
 		dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
 
     	if (m_bDrawSpeedPlot){
-			m_SpeedHistory.drawPlot(m_width/2-plotWidth/2-40, m_height/2+35, plotWidth, plotHeight, dc);
+//			m_SpeedHistory.drawPlot(m_width/2-plotWidth/2-40, m_height/2+35, plotWidth, plotHeight, dc);
+			m_SpeedHistory.drawPlot(10, m_height/2+33, plotWidth, plotHeight, dc);
 
 			dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
-			dc.drawText(m_width*0.72, m_height/2+33, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+			dc.drawText(m_width*0.70, m_height/2+33, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 		} else {
 			dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
 			dc.drawText(m_width/2, m_height/2+33, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);

@@ -9,15 +9,17 @@ Observe wind turns, and see the consequences and make good decisions.
 
 ## Use
 
-The direction where the wind comes from is allways facing up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The red dot show your course over ground direction.
+The direction where the wind comes from is allways facing up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The red dot, and gray boat show your course over ground direction.
+
+In the center circle, the speed is displayed. In addition, a plot can be displayed for historical speed changes.
 
 The up and down buttons can be used for adjusting the wind direction with 5 degree increments.
 
-By pressing menu (hold up button) the wind direction can be defined on either port, or starboard close-hauled direction.
+By pressing menu (hold up button) the wind direction can be defined on either port, or starboard close-hauled direction. There are also some settings available from the menu
 
 The tack angle is defined to 90 degrees.
 
-![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/TackingMaster%20on%20watch%2012.png?raw=true)
+![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/TackingMaster%20on%20watch%2013.png?raw=true)
 ![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Menu%2012.png?raw=true)
 ![screehot](https://github.com/SverreWisloff/TackingMaster/blob/master/Screenshot/Settings%2012.png?raw=true)
 
@@ -39,7 +41,8 @@ The tack angle is defined to 90 degrees.
  - Add settings for drawing the boat
 
  1.3
- - Course more in fokus
+ - Heading more in fokus (a cirkle in centre)
+ - A new speed-history-plot
 
  
 ## Please use it if you find it convinient
