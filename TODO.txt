@@ -1,17 +1,14 @@
 
-Parametrisere alle hardkodinger
-
-Vise historiske kursendringer
-
 Vise historiske hastighetsendringer
 
 Innstilling for kryss-vinkel
 
-Støtte for flere klokker
-
-Vise himmelretninger N, E, W, S
+Stï¿½tte for flere klokker
 
 Orientere skjermen etter Nord (magnetisk/heading)
+
+Permissions
+
 
 
 
