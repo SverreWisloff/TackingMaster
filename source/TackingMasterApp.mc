@@ -9,6 +9,7 @@ class TackingMasterApp extends Application.AppBase {
 
 	var m_TackingMasterView;
 	var m_TackingMasterDelegate;
+	var m_bDrawPolarCogPlot;
 
     function initialize() {
         AppBase.initialize();
@@ -23,12 +24,16 @@ class TackingMasterApp extends Application.AppBase {
 
 		// read our settings
 		var WindDirection;
-		WindDirection = Application.getApp().getProperty("WindDirection1");
+		WindDirection = Application.getApp().getProperty("WindDirection_prop");
 		if (WindDirection==null){
 			WindDirection = 180;
 		}
-		
-		
+
+		m_bDrawPolarCogPlot = Application.getApp().getProperty("DrawPolarCogPlot_prop");
+		if (m_bDrawPolarCogPlot==null){
+			m_bDrawPolarCogPlot = false;
+		}
+        System.println("TackingMasterView.onUpdate() - m_bDrawPolarCogPlot=" + m_bDrawPolarCogPlot); 
      
     }
 
@@ -40,7 +45,12 @@ class TackingMasterApp extends Application.AppBase {
 
     	// Save settings to next time
 		var WindDirection = Application.Storage.getValue("WindDirection");
-		Application.getApp().setProperty("WindDirection1", WindDirection);
+		Application.getApp().setProperty("WindDirection_prop", WindDirection);
+
+		var bDrawPolarCogPlot = Application.Storage.getValue("DrawPolarCogPlot");
+		Application.getApp().setProperty("WindDirection_prop", bDrawPolarCogPlot);
+        System.println("TackingMasterView.onStop() - bDrawPolarCogPlot=" + bDrawPolarCogPlot); 
+
     }
 
     function onPosition(info) { 
@@ -51,6 +61,8 @@ class TackingMasterApp extends Application.AppBase {
     function getInitialView() {
 		m_TackingMasterView = new TackingMasterView();
 		m_TackingMasterDelegate = new TackingMasterDelegate();
+
+        m_TackingMasterView.m_bDrawPolarCogPlot = m_TackingMasterView;
         
         return [ m_TackingMasterView, m_TackingMasterDelegate ];
     }

@@ -4,14 +4,14 @@ _A sailing-app for Garmin watch_
 ## Purpose
 
 This is a simple app for Garmin watches that provides useful information for sailboats that do not have wind instruments.
-Set wind direction and read close-hauled direction, heading direction and speed.
+Set wind direction and read close-hauled direction, course over ground and speed.
 Observe wind turns and speed-changes, and see the consequences and make good decisions.
 
 ## Use
 
 The direction where the wind comes from is allways facing up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The red dot, and gray boat show your course over ground direction.
 
-In the center circle, the heading is displayed. The green number is speed. In addition, a plot can be displayed for historical speed changes.
+In the center circle, course over ground is displayed. The green number is speed. In addition, plot can be displayed for historical speed changes, and historical course-shifts.
 
 The up and down buttons can be used for adjusting the wind direction with 5 degree increments.
 
@@ -41,9 +41,16 @@ The tack angle is defined to 90 degrees.
  - Add settings for drawing the boat
 
  1.3
- - Heading more in fokus (a cirkle in centre)
- - A new speed-history-plot
+ - Course over ground more in fokus (a cirkle in centre)
+ - Add a new speed-history-plot
+ - Add settings for drawing speed-history-plot
 
+1.4
+ - Permission cleanup
+ - Bigger font for speed-text 
+ - Add a polar-plot displaying COG-shifts 
+ - Add settings for drawing COG-shifts
+ 
  
 ## Please use it if you find it convinient
 

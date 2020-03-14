@@ -42,8 +42,11 @@ class TackingMasterView extends WatchUi.View {
 	var m_bDrawBoat;
 	var m_bDrawNWSE;
 	var m_bDrawSpeedPlot;
+	var m_bDrawOrthogonalCogPlot;
+	var m_bDrawPolarCogPlot;
 	var m_boatScale=1.2;
-	var m_SpeedHistory = new TackingMasterDynamics();
+	var m_SpeedHistory = new TackingMasterDynamics(120,false); // standard 120 (2 min)
+	var m_CogHistory = new TackingMasterDynamics(120, true);   // standard 120 (2 min)
 
     function initialize() {
         View.initialize();
@@ -68,6 +71,12 @@ class TackingMasterView extends WatchUi.View {
 
    		m_bDrawSpeedPlot = Application.Storage.getValue("DrawSpeedPlot");
    		if (m_bDrawSpeedPlot==null){m_bDrawSpeedPlot = true;}   	
+
+// 		m_bDrawPolarCogPlot = Application.Storage.getValue("DrawPolarCogPlot");
+// 		if (m_bDrawPolarCogPlot==null){m_bDrawPolarCogPlot = false;}   	
+
+		m_bDrawOrthogonalCogPlot=false;
+
     }
 
     //=====================
@@ -97,7 +106,11 @@ class TackingMasterView extends WatchUi.View {
    		
    		m_bDrawSpeedPlot = Application.Storage.getValue("DrawSpeedPlot");
    		if (m_bDrawSpeedPlot==null){m_bDrawSpeedPlot = true;}
-    }
+
+ 		m_bDrawPolarCogPlot = Application.Storage.getValue("DrawPolarCogPlot");
+ 		if (m_bDrawPolarCogPlot==null){m_bDrawPolarCogPlot = false;}
+		System.println("TackingMasterView.onShow() - m_bDrawPolarCogPlot=" + m_bDrawPolarCogPlot); 
+	}
 
     function setPosition(info) {
         m_posnInfo = info;
@@ -123,7 +136,6 @@ class TackingMasterView extends WatchUi.View {
         m_WindDirPort = reduse_deg(m_WindDirection - (m_TackAngle/2) );
         
  		// Get COG & SOG
-		//var positionInfo = Position.getInfo();
 		if(m_posnInfo!=null	){ 
 			m_COG_deg = reduse_deg((m_posnInfo.heading)/Math.PI*180);
 		}
@@ -137,9 +149,13 @@ class TackingMasterView extends WatchUi.View {
 			m_Speed_kn = 0;
 		}
 
+		//Update Speed-History-array
 		if (m_Speed_kn>-0.000001 && m_Speed_kn<99.9){
 				m_SpeedHistory.push(m_Speed_kn);
 		}
+
+		//Update COG-History-array
+		m_CogHistory.push(m_COG_deg);
 
 /*        if (m_posnInfo!=null){
         	var acc=0;
@@ -175,10 +191,13 @@ class TackingMasterView extends WatchUi.View {
         // Draw COG-circle 
 		drawCogDot(dc);
 
+		//Draw Cog-curve 
+		drawCogPlot(dc);
+
 		//Draw speed-curve and SOG-text
 		drawSpeedPlot(dc);
 
-		// Draw COG-text
+		// Draw COG-text in a circle
 		var fontHeight = dc.getFontHeight(Graphics.FONT_TINY); 
 		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_BLACK);
 		dc.fillCircle(m_width/2, m_height/2, 25);
@@ -187,10 +206,6 @@ class TackingMasterView extends WatchUi.View {
         
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.drawText(m_width/2, m_height/2-fontHeight/2, Graphics.FONT_TINY, m_COG_deg.toNumber() , Graphics.TEXT_JUSTIFY_CENTER);
-
-		// Draw SOG
-        //dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        //dc.drawText(m_width/2, m_height/2+35, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 
 		// Draw Time-text
 		var myTime = System.getClockTime(); // ClockTime object
@@ -359,7 +374,7 @@ class TackingMasterView extends WatchUi.View {
 			Y = arrayBoat[i][1];
 			lineToOrigoC( dc, (X*COS) - (Y*SIN), (X*SIN) + (Y*COS) );
 		}
-	
+
     }
 
     //================================
@@ -376,13 +391,32 @@ class TackingMasterView extends WatchUi.View {
 			m_SpeedHistory.drawPlot(10, m_height/2+33, plotWidth, plotHeight, dc);
 
 			dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
-			dc.drawText(m_width*0.70, m_height/2+33, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+			dc.drawText(m_width*0.70, m_height/2+33, Graphics.FONT_SMALL, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 		} else {
 			dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
-			dc.drawText(m_width/2, m_height/2+33, Graphics.FONT_TINY, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+			dc.drawText(m_width/2, m_height/2+33, Graphics.FONT_SMALL, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 		}
 	}
 
+    //================================
+    // Draws Cog-histoy-plot
+	//================================
+	function drawCogPlot(dc){
+		var plotWidth=m_width/2;
+		var plotHeight=35;
+
+		dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
+
+		//Draw orthogonal COG-plot
+    	if (m_bDrawOrthogonalCogPlot){
+			m_CogHistory.drawPlot(10, m_height/2+33, plotWidth, plotHeight, dc);
+		}
+
+		//Draw polar COG-plot
+    	if (m_bDrawPolarCogPlot){
+			m_CogHistory.drawPolarPlot(dc, m_width, m_height, m_WindDirection);
+		}
+	}
 
 	// ==========================================
 	// DrawLine functions in origo ref-syst

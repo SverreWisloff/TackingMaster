@@ -49,6 +49,7 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
 			var strHide = WatchUi.loadResource(Rez.Strings.menu_label_Hide);
 			var strDrawNWSE = WatchUi.loadResource(Rez.Strings.menu_label_DrawNWSE);
 			var strDrawSpeedPlot = WatchUi.loadResource(Rez.Strings.menu_label_DrawSpeedPlot);
+			var strDrawPolarCogPlot = WatchUi.loadResource(Rez.Strings.menu_label_DrawPolarCogPlot);
 
     		// Get settings
     		var bDrawBoat = Application.Storage.getValue("DrawBoat");   	
@@ -60,13 +61,19 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
     		var bDrawSpeedPlot = Application.Storage.getValue("DrawSpeedPlot");   
     		if (bDrawSpeedPlot!=false) {bDrawSpeedPlot = true;} 
     			else {bDrawSpeedPlot = false;}
-    			
+    		var bDrawPolarCogPlot = Application.Storage.getValue("DrawPolarCogPlot");   
+    		if (bDrawPolarCogPlot!=false) {bDrawPolarCogPlot = true;} 
+    			else {bDrawPolarCogPlot = false;}
+
+
 			//Build the settings-menu
             settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawBoat, {:enabled=>strShow, :disabled=>strHide}, "idDrawBoat", bDrawBoat, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
             settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawNWSE, {:enabled=>strShow, :disabled=>strHide}, "idDrawNWSE", bDrawNWSE, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
             settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawSpeedPlot, {:enabled=>strShow, :disabled=>strHide}, "idDrawSpeedPlot", bDrawSpeedPlot, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
+            WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
+            settingsMenu.addItem(new WatchUi.ToggleMenuItem(strDrawPolarCogPlot, {:enabled=>strShow, :disabled=>strHide}, "idDrawPolarCogPlot", bDrawPolarCogPlot, {:alignment=>WatchUi.MenuItem.MENU_ITEM_LABEL_ALIGN_LEFT}));
             WatchUi.pushView(settingsMenu, new Menu2SampleSubMenuDelegate(), WatchUi.SLIDE_UP );
 /*
         } else {
@@ -103,6 +110,9 @@ class Menu2SampleSubMenuDelegate extends WatchUi.Menu2InputDelegate {
 		} else if (MenuItem.equals("idDrawSpeedPlot")){
 	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawSpeedPlot");
     		Application.Storage.setValue("DrawSpeedPlot", item.isEnabled()); 
+		} else if (MenuItem.equals("idDrawPolarCogPlot")){
+	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawPolarCogPlot");
+    		Application.Storage.setValue("DrawPolarCogPlot", item.isEnabled()); 
 		} else {
 	        System.println("Menu2SampleSubMenuDelegate::onSelect()::else");
         }
@@ -112,6 +122,7 @@ class Menu2SampleSubMenuDelegate extends WatchUi.Menu2InputDelegate {
 
     function onBack() {
         System.println("Menu2SampleSubMenuDelegate::onBack()");
+        WatchUi.popView(WatchUi.SLIDE_DOWN);
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         WatchUi.popView(WatchUi.SLIDE_DOWN);
