@@ -1,5 +1,6 @@
+Vise en grå abscisseakse
 
-Vise historiske hastighetsendringer
+All grafikk som vektor-grafikk
 
 Innstilling for kryss-vinkel
 
@@ -9,6 +10,11 @@ Orientere skjermen etter Nord (magnetisk/heading)
 
 Permissions
 
+Lagre data for turen for å lage polar-diagram
 
+Avvik fra en kurs. Lift? Wind shift
+
+Vibrate when your boat is heading upwind
+http://marbec.com.ar/How%20to%20Sail%20in%20Shifty%20Wind.pdf
 
 
