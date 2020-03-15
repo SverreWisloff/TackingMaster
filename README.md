@@ -51,8 +51,11 @@ The tack angle is defined to 90 degrees.
  - Bigger font for speed-text 
  - Add a polar-plot displaying COG-shifts 
  - Add settings for drawing COG-shifts
- 
- 
+
+1.5 
+ - Yellow COG, COG-dot and COG-history-plot
+ - Smoothing of the COG-history-plot
+
 ## Please use it if you find it convinient
 
 And I am happy to hear what you think about it

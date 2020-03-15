@@ -72,8 +72,8 @@ class TackingMasterView extends WatchUi.View {
    		m_bDrawSpeedPlot = Application.Storage.getValue("DrawSpeedPlot");
    		if (m_bDrawSpeedPlot==null){m_bDrawSpeedPlot = true;}   	
 
-// 		m_bDrawPolarCogPlot = Application.Storage.getValue("DrawPolarCogPlot");
-// 		if (m_bDrawPolarCogPlot==null){m_bDrawPolarCogPlot = false;}   	
+ 		m_bDrawPolarCogPlot = Application.Storage.getValue("DrawPolarCogPlot");
+ 		if (m_bDrawPolarCogPlot==null){m_bDrawPolarCogPlot = false;}   	
 
 		m_bDrawOrthogonalCogPlot=false;
 
@@ -109,7 +109,7 @@ class TackingMasterView extends WatchUi.View {
 
  		m_bDrawPolarCogPlot = Application.Storage.getValue("DrawPolarCogPlot");
  		if (m_bDrawPolarCogPlot==null){m_bDrawPolarCogPlot = false;}
-		System.println("TackingMasterView.onShow() - m_bDrawPolarCogPlot=" + m_bDrawPolarCogPlot); 
+//		System.println("TackingMasterView.onShow() - m_bDrawPolarCogPlot=" + m_bDrawPolarCogPlot); 
 	}
 
     function setPosition(info) {
@@ -204,7 +204,7 @@ class TackingMasterView extends WatchUi.View {
 		dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLUE);
         dc.drawCircle(m_width/2, m_height/2, 25);
         
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+        dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_BLACK);
         dc.drawText(m_width/2, m_height/2-fontHeight/2, Graphics.FONT_TINY, m_COG_deg.toNumber() , Graphics.TEXT_JUSTIFY_CENTER);
 
 		// Draw Time-text
@@ -304,7 +304,7 @@ class TackingMasterView extends WatchUi.View {
     // Draws COG-dot 
     //=====================
     function drawCogDot(dc) {
-    	dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+    	dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
 
 		// X,Y refers to origo i face-centre
 		var i = -(m_WindDirection+90-m_COG_deg)/180.0 * Math.PI;
@@ -385,6 +385,7 @@ class TackingMasterView extends WatchUi.View {
 		var plotHeight=35;
 
 		dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
+		dc.setPenWidth(3);
 
     	if (m_bDrawSpeedPlot){
 //			m_SpeedHistory.drawPlot(m_width/2-plotWidth/2-40, m_height/2+35, plotWidth, plotHeight, dc);
@@ -405,7 +406,8 @@ class TackingMasterView extends WatchUi.View {
 		var plotWidth=m_width/2;
 		var plotHeight=35;
 
-		dc.setColor(Graphics.COLOR_DK_RED, Graphics.COLOR_TRANSPARENT);
+		dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
+		dc.setPenWidth(2);
 
 		//Draw orthogonal COG-plot
     	if (m_bDrawOrthogonalCogPlot){
