@@ -5,6 +5,22 @@ using Toybox.Math;
 using Toybox.Graphics;
 
 
+//           0    
+//           |    
+//        4  |  1 
+//270 --------------- 90
+//        3  |  2 
+//           |
+//          180    
+function Quadrant( degree )
+{
+	if      ( (degree>=  0.0) && (degree< 90.0) ) { return 1; }
+	else if ( (degree>= 90.0) && (degree<180.0) ) { return 2; }
+	else if ( (degree>=180.0) && (degree<270.0) ) { return 3; }
+	else if ( (degree>=270.0) && (degree<360.0) ) { return 4; }
+	else {return -1;}
+}
+
 class TackingMasterDynamics 
 {
 	var m_Size = 30; // standard 120 (2 min)
@@ -66,39 +82,76 @@ class TackingMasterDynamics
 
 		m_aData[m_NowPointer] = newData;
 
-		if (!m_bCOG)
-		{
 	// Weighted moving average : Weights: 1-2-1
 	//Algorithm:
-	// Smoothed(prev) = (prevprev + prev*2 + this) / 4
+	// Smoothed(prev2) = (prev4 + prev3*2 + prev2*3 + prev1*2 + this) / 4
+	// Smoothed(prev1) = (prev2 + prev1*2 + this) / 4
 	// Smoothed(this) = This
-			var PrevPointer;
-			var PrevPrevPointer;
-			var DataPrev;
-			var DataPrevPrev;
-			var SmootedDataPrev;
+		var Prev1Pointer;
+		var Prev2Pointer;
+		var Prev3Pointer;
+		var Prev4Pointer;
+		var DataPrev1;
+		var DataPrev2;
+		var DataPrev3;
+		var DataPrev4;
+		var SmootedDataPrev1;
+		var SmootedDataPrev2;
 
-			// Find PrevPnt
-			if (m_NowPointer==0){PrevPointer = m_Size-1;}
-			else {PrevPointer = m_NowPointer-1;}
+		// Find Prev1Pnt
+		if (m_NowPointer==0){Prev1Pointer = m_Size-1;}
+		else {Prev1Pointer = m_NowPointer-1;}
+		
+		// Find Prev2Pnt
+		if (Prev1Pointer==0){Prev2Pointer = m_Size-1;}
+		else {Prev2Pointer = Prev1Pointer-1;}
+
+		// Find Prev3Pnt
+		if (Prev2Pointer==0){Prev3Pointer = m_Size-1;}
+		else {Prev3Pointer = Prev2Pointer-1;}
+
+		// Find Prev4Pnt
+		if (Prev3Pointer==0){Prev4Pointer = m_Size-1;}
+		else {Prev4Pointer = Prev3Pointer-1;}
+
+		DataPrev1 = m_aData[Prev1Pointer];
+		DataPrev2 = m_aData[Prev2Pointer];
+		DataPrev3 = m_aData[Prev3Pointer];
+		DataPrev4 = m_aData[Prev4Pointer];
+
+		if (DataPrev1>900){DataPrev1=newData;}
+		if (DataPrev2>900){DataPrev2=newData;}
+		if (DataPrev3>900){DataPrev3=newData;}
+		if (DataPrev4>900){DataPrev4=newData;}
+
+		if (m_bCOG)
+		{
+			var Quad0 = Quadrant(newData);
+			var Quad1 = Quadrant(DataPrev1);
+			var Quad2 = Quadrant(DataPrev2);
+			var Quad3 = Quadrant(DataPrev3);
+			var Quad4 = Quadrant(DataPrev4);
 			
-			// Find PrevPrevPnt
-			if (PrevPointer==0){PrevPrevPointer = m_Size-1;}
-			else {PrevPrevPointer = PrevPointer-1;}
-
-			DataPrev = m_aData[PrevPointer];
-			DataPrevPrev = m_aData[PrevPrevPointer];
-
-			if (DataPrev>900){DataPrev=newData;}
-			if (DataPrevPrev>900){DataPrevPrev=newData;}
-
-			SmootedDataPrev = (DataPrevPrev + DataPrev*2.0 + newData) / 4.0;
-			m_aDataSmooth [PrevPointer] = SmootedDataPrev;
-			m_aDataSmooth [m_NowPointer] = newData;
-		} else {
-			// NOT smoothing degrees !!!!!!!!!!!
-			m_aDataSmooth [m_NowPointer] = newData;
+			//Er alle COG-data som skal brukes i glatting i quadrant 1 eller 4?
+			if ( (Quad0==1 || Quad0==4) 
+				&& (Quad1==1 || Quad1==4)
+				&& (Quad2==1 || Quad2==4)
+				&& (Quad3==1 || Quad3==4)
+				&& (Quad4==1 || Quad4==4) )
+			{
+					if (Quad0==1) { newData = newData + 360.0; }
+					if (Quad1==1) { DataPrev1 = DataPrev1 + 360.0; }
+					if (Quad2==1) { DataPrev2 = DataPrev2 + 360.0; }
+					if (Quad3==1) { DataPrev3 = DataPrev3 + 360.0; }
+					if (Quad4==1) { DataPrev4 = DataPrev4 + 360.0; }
+			}	
 		}
+		
+		SmootedDataPrev2 = (DataPrev4*1.5 + DataPrev3*2.0 + DataPrev2*3.0 + DataPrev1*2.0 + newData*1.5) / 10.0;
+		SmootedDataPrev1 = (DataPrev2 + DataPrev1*2.0 + newData) / 4.0;
+		m_aDataSmooth [Prev2Pointer] = SmootedDataPrev2;
+		m_aDataSmooth [Prev1Pointer] = SmootedDataPrev1;
+		m_aDataSmooth [m_NowPointer] = newData;
 	}
 
 
