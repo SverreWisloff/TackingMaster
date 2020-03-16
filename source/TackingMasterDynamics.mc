@@ -14,10 +14,10 @@ using Toybox.Graphics;
 //          180    
 function Quadrant( degree )
 {
-	if      ( (degree>=  0.0) && (degree< 90.0) ) { return 1; }
-	else if ( (degree>= 90.0) && (degree<180.0) ) { return 2; }
-	else if ( (degree>=180.0) && (degree<270.0) ) { return 3; }
-	else if ( (degree>=270.0) && (degree<360.0) ) { return 4; }
+	if      ( (degree>=  0) && (degree< 90) ) { return 1; }
+	else if ( (degree>= 90) && (degree<180) ) { return 2; }
+	else if ( (degree>=180) && (degree<270) ) { return 3; }
+	else if ( (degree>=270) && (degree<360) ) { return 4; }
 	else {return -1;}
 }
 
@@ -233,8 +233,11 @@ class TackingMasterDynamics
 		//draw data
 		for( var sinceNow = 0; sinceNow < m_Size; sinceNow += 1 ) {
         	var Data = getSmoothedData(sinceNow);
-			if (Data<900){
+			if (Data<900 )//&& Data>0.0 && Data<360.0)
+			{
 				plotPolarCoordToWatchCoord(dc, width, height, WindDirection, Data, sinceNow);
+			} else {
+				//System.println("ERROR : drawPolarPlot() - Data=" + Data );
 			}
 		}
 
@@ -279,13 +282,13 @@ class TackingMasterDynamics
 		var dataMax = me.Max();
 
 		if (m_PlotMinData < dataMin  ){
-			m_PlotMinData = m_PlotMinData + 0.1;
+			m_PlotMinData = m_PlotMinData + 0.05;
 		} else {
 			m_PlotMinData = dataMin; 
 		}
 
 		if ( (m_PlotMaxData > dataMax)  ){
-			m_PlotMaxData = m_PlotMaxData - 0.1;
+			m_PlotMaxData = m_PlotMaxData - 0.05;
 		} else {
 			m_PlotMaxData = dataMax;
 		}

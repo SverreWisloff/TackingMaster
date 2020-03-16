@@ -15,12 +15,11 @@ function timerCallback() {
 }
 
 function reduse_deg(deg) {
-	if (deg<0){
-		deg += 360;
-	}
-	else if (deg>360){
-		deg -= 360;
-	}
+	if (deg<0) 		{	deg += 360; }
+	if (deg<0) 		{	deg += 360; }
+	if (deg>360)	{	deg -= 360; }
+	if (deg>360)	{	deg -= 360; }
+
 	return deg;
 }
 
@@ -45,8 +44,8 @@ class TackingMasterView extends WatchUi.View {
 	var m_bDrawOrthogonalCogPlot;
 	var m_bDrawPolarCogPlot;
 	var m_boatScale=1.2;
-	var m_SpeedHistory = new TackingMasterDynamics(120,false); // standard 120 (2 min)
-	var m_CogHistory = new TackingMasterDynamics(120, true);   // standard 120 (2 min)
+	var m_SpeedHistory = new TackingMasterDynamics(60,false); // standard 120 (2 min)
+	var m_CogHistory = new TackingMasterDynamics(60, true);   // standard 120 (2 min)
 
     function initialize() {
         View.initialize();
@@ -134,7 +133,9 @@ class TackingMasterView extends WatchUi.View {
         m_WindDirection = reduse_deg(m_WindDirection.toLong());
         m_WindDirStarboard = reduse_deg(m_WindDirection + (m_TackAngle/2) );
         m_WindDirPort = reduse_deg(m_WindDirection - (m_TackAngle/2) );
-        
+
+//        System.println("TackingMasterView.onUpdate() - m_WindDirection=" + m_WindDirection);
+
  		// Get COG & SOG
 		if(m_posnInfo!=null	){ 
 			m_COG_deg = reduse_deg((m_posnInfo.heading)/Math.PI*180);
@@ -184,7 +185,8 @@ class TackingMasterView extends WatchUi.View {
         
 		// Draw numbers for wind directions
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-        dc.drawText(m_width/2, m_height/2-115, Graphics.FONT_TINY, m_WindDirection, Graphics.TEXT_JUSTIFY_CENTER);
+		//m_WindDirection = me.reduse_deg(m_WindDirection); // !!! Why?
+        dc.drawText(m_width/2, m_height/2-115, Graphics.FONT_TINY, m_WindDirection , Graphics.TEXT_JUSTIFY_CENTER);
         dc.drawText(m_width/5, m_height/2-70, Graphics.FONT_TINY, m_WindDirPort, Graphics.TEXT_JUSTIFY_LEFT);
         dc.drawText(m_width/5*4, m_height/2-70, Graphics.FONT_TINY, m_WindDirStarboard, Graphics.TEXT_JUSTIFY_RIGHT);
 
