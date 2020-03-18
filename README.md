@@ -55,6 +55,7 @@ The tack angle is defined to 90 degrees.
 1.5 
  - Yellow COG, COG-dot and COG-history-plot
  - Smoothing of the COG-history-plot
+ - Add a help-line in the speed-history-plot
 
 ## Please use it if you find it convinient
 

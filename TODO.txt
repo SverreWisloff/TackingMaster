@@ -1,4 +1,12 @@
-Vise en grå abscisseakse
+Remember settings for showing historic COG-data
+
+Drawing historic COG-data with better contrast, white color 
+
+Vise en grå abscisse
+
+Smoothin COG-data
+
+Smoothin SOG-data
 
 All grafikk som vektor-grafikk
 

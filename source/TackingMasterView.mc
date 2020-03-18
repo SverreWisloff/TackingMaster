@@ -44,8 +44,8 @@ class TackingMasterView extends WatchUi.View {
 	var m_bDrawOrthogonalCogPlot;
 	var m_bDrawPolarCogPlot;
 	var m_boatScale=1.2;
-	var m_SpeedHistory = new TackingMasterDynamics(60,false); // standard 120 (2 min)
-	var m_CogHistory = new TackingMasterDynamics(60, true);   // standard 120 (2 min)
+	var m_SpeedHistory = new TackingMasterDynamics(120,false); // standard 120 (2 min)
+	var m_CogHistory = new TackingMasterDynamics(120, true);   // standard 120 (2 min)
 
     function initialize() {
         View.initialize();
@@ -116,9 +116,9 @@ class TackingMasterView extends WatchUi.View {
         WatchUi.requestUpdate();
     }
 
-    //=====================
+    //==========================================
     // Update the view
-    //=====================
+    //==========================================
     function onUpdate(dc) {
 		m_width = dc.getWidth();
 		m_height = dc.getHeight();
@@ -385,9 +385,6 @@ class TackingMasterView extends WatchUi.View {
 	function drawSpeedPlot(dc){
 		var plotWidth=m_width/2;
 		var plotHeight=35;
-
-		dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
-		dc.setPenWidth(3);
 
     	if (m_bDrawSpeedPlot){
 //			m_SpeedHistory.drawPlot(m_width/2-plotWidth/2-40, m_height/2+35, plotWidth, plotHeight, dc);

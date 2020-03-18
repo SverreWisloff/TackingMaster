@@ -293,9 +293,18 @@ class TackingMasterDynamics
 			m_PlotMaxData = dataMax;
 		}
 
-//		System.println("dataMax="+ dataMax + " dataMin="+ dataMin + " m_PlotMaxData=" + m_PlotMaxData);
+		//Draw a help line to nearest long
+		var DisplayAbsicce = (m_PlotMaxData + m_PlotMinData ) / 2.0;
+		DisplayAbsicce = DisplayAbsicce.toLong();
+		dc.setColor(Graphics.COLOR_DK_GREEN, Graphics.COLOR_TRANSPARENT);
+		dc.setPenWidth(1);
+		plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce, 0);
+		plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce, m_Size-2);
+
+//		System.println("dataMax="+ dataMax + " dataMin="+ dataMin + " m_PlotMaxData=" + m_PlotMaxData + " DisplayAbsicce=" + DisplayAbsicce);
 		
-		//draw data
+		//draw data-points into plot
+		dc.setPenWidth(3);
 		for( var sinceNow = 0; sinceNow < m_Size; sinceNow += 1 ) {
         	var Data = getSmoothedData(sinceNow);
 			if (Data<900){
@@ -305,11 +314,18 @@ class TackingMasterDynamics
 //		me.Print();
 	}
 
-
+	//================================================ 
+	//Draw line from previous datapoint to this point
+	//================================================ 
+	//DX, DY : Upper left corner of plot
+	//width, height: width and height of plot
+	//dataMax, dataMin: Max/Min for plot - y-axis
+	//data,time = y, -x
 	function plotCoordToWatchCoord(dc, DX, DY, width, height, dataMax, dataMin, data, time){
 		var WatchX;
 		var WatchY;
 
+		// Compute watch coords for to-point
 		if ( (dataMax.toFloat()-dataMin) == 0.0  ){
 			//!!!!
 			return;
@@ -323,6 +339,7 @@ class TackingMasterDynamics
 			m_PrevWatchX = WatchX;
 			m_PrevWatchY = WatchY;
 		}
+		//Nulstiller forrige koordinat ved første punkt
 		if (time==0){
 			m_PrevWatchX = WatchX;
 			m_PrevWatchY = WatchY;
