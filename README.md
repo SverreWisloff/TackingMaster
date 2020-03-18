@@ -9,9 +9,9 @@ Observe wind turns and speed-changes, and see the consequences and make good dec
 
 ## Use
 
-The direction where the wind comes from is allways facing up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The red dot, and gray boat show your course over ground direction.
+The direction where the wind comes from is allways facing up on the clock, and the top number is the direction against the wind-eye. The blue "N" shows the direction to north. The yellow dot, and gray boat show your course over ground direction.
 
-In the center circle, course over ground is displayed. The green number is speed. In addition, plot can be displayed for historical speed changes, and historical course-shifts.
+In the center circle, course over ground is displayed in yellow. The green number is speed. In addition, plot can be displayed for historical speed changes, and historical course-shifts.
 
 The up and down buttons can be used for adjusting the wind direction with 5 degree increments.
 
