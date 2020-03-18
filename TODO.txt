@@ -1,22 +1,12 @@
-Remember settings for showing historic COG-data
-
-Drawing historic COG-data with better contrast, white color 
-
-Vise en grå abscisse
-
-Smoothin COG-data
-
-Smoothin SOG-data
-
 All grafikk som vektor-grafikk
 
 Innstilling for kryss-vinkel
 
 St�tte for flere klokker
 
-Orientere skjermen etter Nord (magnetisk/heading)
+Detect a tack
 
-Permissions
+Orientere skjermen etter Nord (magnetisk/heading)
 
 Lagre data for turen for å lage polar-diagram
 

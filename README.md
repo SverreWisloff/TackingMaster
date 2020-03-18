@@ -61,7 +61,7 @@ The tack angle is defined to 90 degrees.
 
 And I am happy to hear what you think about it
 
-The code for the app is here:
+The code for the app can be studied here:
 <a href="https://github.com/SverreWisloff/TackingMaster/">https://github.com/SverreWisloff/TackingMaster/</a>
 
 Happy sailing!

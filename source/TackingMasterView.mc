@@ -190,11 +190,11 @@ class TackingMasterView extends WatchUi.View {
         dc.drawText(m_width/5, m_height/2-70, Graphics.FONT_TINY, m_WindDirPort, Graphics.TEXT_JUSTIFY_LEFT);
         dc.drawText(m_width/5*4, m_height/2-70, Graphics.FONT_TINY, m_WindDirStarboard, Graphics.TEXT_JUSTIFY_RIGHT);
 
-        // Draw COG-circle 
-		drawCogDot(dc);
-
 		//Draw Cog-curve 
 		drawCogPlot(dc);
+
+        // Draw COG-circle 
+		drawCogDot(dc);
 
 		//Draw speed-curve and SOG-text
 		drawSpeedPlot(dc);
@@ -306,8 +306,6 @@ class TackingMasterView extends WatchUi.View {
     // Draws COG-dot 
     //=====================
     function drawCogDot(dc) {
-    	dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
-
 		// X,Y refers to origo i face-centre
 		var i = -(m_WindDirection+90-m_COG_deg)/180.0 * Math.PI;
         var X = ((m_width/2)-m_CogDotSize) * Math.cos(i);
@@ -315,6 +313,9 @@ class TackingMasterView extends WatchUi.View {
 		
 //		System.println("drawNorth : WindDirection=" + WindDirection + " i="+i);
 		
+    	dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+    	dc.fillCircle(X + (m_width/2), Y + (m_height/2), m_CogDotSize+2);
+    	dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
     	dc.fillCircle(X + (m_width/2), Y + (m_height/2), m_CogDotSize);
     }	
     //=====================
@@ -405,16 +406,21 @@ class TackingMasterView extends WatchUi.View {
 		var plotWidth=m_width/2;
 		var plotHeight=35;
 
-		dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
-		dc.setPenWidth(2);
 
 		//Draw orthogonal COG-plot
     	if (m_bDrawOrthogonalCogPlot){
+			dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
+			dc.setPenWidth(2);
 			m_CogHistory.drawPlot(10, m_height/2+33, plotWidth, plotHeight, dc);
 		}
 
 		//Draw polar COG-plot
     	if (m_bDrawPolarCogPlot){
+			dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+			dc.setPenWidth(4);
+			m_CogHistory.drawPolarPlot(dc, m_width, m_height, m_WindDirection);
+			dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
+			dc.setPenWidth(2);
 			m_CogHistory.drawPolarPlot(dc, m_width, m_height, m_WindDirection);
 		}
 	}
