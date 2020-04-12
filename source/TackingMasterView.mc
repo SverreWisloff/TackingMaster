@@ -44,8 +44,10 @@ class TackingMasterView extends WatchUi.View {
 	var m_bDrawOrthogonalCogPlot;
 	var m_bDrawPolarCogPlot;
 	var m_boatScale=1.2;
-	var m_SpeedHistory = new TackingMasterDynamics(120,false); // standard 120 (2 min)
-	var m_CogHistory = new TackingMasterDynamics(120, true);   // standard 120 (2 min)
+	var m_SpeedHistory = new TackingMasterDynamics(110,false); // standard 120 (2 min)
+	var m_CogHistory = new TackingMasterDynamics(110, true);   // standard 120 (2 min)
+	// Error: Watchdog Tripped Error - Code Executed Too Long
+	// For wathces with watchdog_count=120000, set TackingMasterDynamics for 110 is highest
 
     function initialize() {
         View.initialize();
@@ -82,8 +84,9 @@ class TackingMasterView extends WatchUi.View {
     // Load your resources here
     //=====================
     function onLayout(dc) {
-        setLayout(Rez.Layouts.MainLayout(dc));
-
+        setLayout(Rez.Layouts.MainLayout(dc)); 
+//		System.println("Load resources");
+		
 		// Create a counter that increments by one each second
 		var myTimer = new Timer.Timer();
 		myTimer.start(method(:timerCallback), 1000, true);
