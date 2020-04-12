@@ -23,9 +23,10 @@ function Quadrant( degree )
 
 class TackingMasterDynamics 
 {
-	var m_Size = 30; // standard 120 (2 min)
+	var m_Size = 10; // standard 120 (2 min)
 	var m_aData = [];
 	var m_aDataSmooth = [];
+	var m_nSmoothingWith = 2; // 0=off, 2=two points in both ways
 	var m_NowPointer; 
 	var m_PlotMaxData;
 	var m_PlotMinData;
@@ -56,6 +57,7 @@ class TackingMasterDynamics
 		}
 		m_PlotMaxData=2.0;
 		m_PlotMinData=0.0;
+		//me.Print();
 	}
 
 	// Make som demodata and fill the hole array with data from 1 to 3 
@@ -71,14 +73,15 @@ class TackingMasterDynamics
 	// Insert latest data
 	function push(newData)
 	{
-		//System.println("Dynamics::push(" + newCog + ")  -- m_NowPointer=" + m_NowPointer);
+		//System.println("Dynamics::push(" + newData + ")  -- m_NowPointer=" + m_NowPointer);
 		
 		m_NowPointer+=1;
 		if (m_NowPointer>=m_Size){
 			m_NowPointer=0;
+//			System.println("Dynamics::push(" + newData + ")  -- m_NowPointer=" + m_NowPointer + " - Passing buffer-limit - new beginn at top");
 		}
 
-		//System.println("Dynamics::push(" + newCog + ")  -- m_NowPointer=" + m_NowPointer);
+		//System.println("Dynamics::push(" + newData + ")  -- m_NowPointer=" + m_NowPointer);
 
 		m_aData[m_NowPointer] = newData;
 
@@ -147,11 +150,15 @@ class TackingMasterDynamics
 			}	
 		}
 		
-		SmootedDataPrev2 = (DataPrev4*1.5 + DataPrev3*2.0 + DataPrev2*3.0 + DataPrev1*2.0 + newData*1.5) / 10.0;
-		SmootedDataPrev1 = (DataPrev2 + DataPrev1*2.0 + newData) / 4.0;
-		m_aDataSmooth [Prev2Pointer] = SmootedDataPrev2;
-		m_aDataSmooth [Prev1Pointer] = SmootedDataPrev1;
-		m_aDataSmooth [m_NowPointer] = newData;
+		if (m_nSmoothingWith==2){
+			SmootedDataPrev2 = (DataPrev4*1.5 + DataPrev3*2.0 + DataPrev2*3.0 + DataPrev1*2.0 + newData*1.5) / 10.0;
+			SmootedDataPrev1 = (DataPrev2 + DataPrev1*2.0 + newData) / 4.0;
+			m_aDataSmooth [Prev2Pointer] = SmootedDataPrev2;
+			m_aDataSmooth [Prev1Pointer] = SmootedDataPrev1;
+			m_aDataSmooth [m_NowPointer] = newData;
+		} else if (m_nSmoothingWith==0){
+			m_aDataSmooth [m_NowPointer] = newData;
+		}
 	}
 
 
@@ -171,15 +178,22 @@ class TackingMasterDynamics
 	}
 	
 	function getSmoothedData(sinceNow){
-		if (sinceNow>m_Size || sinceNow<0){return 0.0;}
+		if (sinceNow>m_Size || sinceNow<0){
+			System.println("getSmoothedData() - SKAL IKKE SKJE");
+			return 0.0;
+		}
 
 		var i = m_NowPointer-sinceNow;
 
 		if (i<0){
+//			System.println("getSmoothedData() - Passerer buffer");
 			i = m_Size + (i);
 		}
 
-		if (i>m_Size || i<0){return 0.0;}
+		if (i>m_Size || i<0){
+			System.println("getSmoothedData() - SKAL HELLER IKKE SKJE");
+			return 0.0;
+		}
 
 		return m_aDataSmooth[i];
 	}
@@ -300,13 +314,35 @@ class TackingMasterDynamics
 		dc.setPenWidth(1);
 		plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce, 0);
 		plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce, m_Size-2);
+		
+		if (DisplayAbsicce+1 < m_PlotMaxData){
+			plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce+1, 0);
+			plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce+1, m_Size-2);
+		}
+		if (DisplayAbsicce-1 > m_PlotMinData){
+			plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce-1, 0);
+			plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, DisplayAbsicce-1, m_Size-2);
+		}
 
 //		System.println("dataMax="+ dataMax + " dataMin="+ dataMin + " m_PlotMaxData=" + m_PlotMaxData + " DisplayAbsicce=" + DisplayAbsicce);
 		
 		//draw data-points into plot
+		var sinceNow;
+		var Data;
+		dc.setPenWidth(7);
+		dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+		for( sinceNow = 0; sinceNow < m_Size-1; sinceNow += 1 ) {
+        	Data = getSmoothedData(sinceNow);
+			if (Data<900){
+				plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, Data, sinceNow);
+			}
+		}
 		dc.setPenWidth(3);
-		for( var sinceNow = 0; sinceNow < m_Size; sinceNow += 1 ) {
-        	var Data = getSmoothedData(sinceNow);
+		dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
+
+		for( sinceNow = 0; sinceNow < m_Size; sinceNow += 1 ) {
+       	   	Data = getSmoothedData(sinceNow);
+
 			if (Data<900){
 				plotCoordToWatchCoord(dc, DX, DY, width, height, m_PlotMaxData, m_PlotMinData, Data, sinceNow);
 			}
