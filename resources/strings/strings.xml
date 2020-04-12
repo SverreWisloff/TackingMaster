@@ -1,0 +1,20 @@
+<strings>
+    <string id="AppName">TackingMaster</string>
+
+    <string id="prompt">Are you ready?</string>
+    <string id="menu_label_Menu">Menu</string>
+
+    <string id="menu_label_DrawNWSE">N+E+S+W</string>
+    <string id="menu_label_DrawBoat">Boat</string>
+    <string id="menu_label_DrawSpeedPlot">Speed history</string>
+    <string id="menu_label_DrawPolarCogPlot">COG-diagram</string>
+
+    <string id="menu_label_Set_Direction">Set close-hauled direction</string>
+    <string id="menu_label_Port">Port tack</string>
+    <string id="menu_label_Starb">Starboard tack</string>
+
+    <string id="menu_label_Show">Show</string>
+    <string id="menu_label_Hide">Hide</string>
+
+    <string id="menu_label_Settings">Settings</string>
+</strings>
