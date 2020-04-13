@@ -61,7 +61,7 @@ The tack angle is defined to 90 degrees.
  - Support for Garmin Fenix 5 plus
 
 1.7
- - Better contrast speed-history-plot
+ - Better contrast at the speed-history-plot
  - Three help-lines in the speed-history-plot 
 
 ## Please use it if you find it convinient
