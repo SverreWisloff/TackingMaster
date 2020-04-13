@@ -27,20 +27,20 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
             // When the toggle menu item is selected, push a new menu that demonstrates
             // left and right toggles with automatic substring toggles.
             //Set port tack
-            System.println("TackingMasterMenuDelegate::onSelect() - idSetPortWD");
+//            System.println("TackingMasterMenuDelegate::onSelect() - idSetPortWD");
 	        var COG = getCOG();
 	        var WindDirection = COG-45;
         	Application.Storage.setValue("WindDirection", WindDirection);
 	        WatchUi.popView(WatchUi.SLIDE_DOWN);
         } else if ( item.getId().equals("idSetStarbWD") ) {
             //Set starboard tack
-            System.println("TackingMasterMenuDelegate::onSelect() - idSetStarbWD");
+//          System.println("TackingMasterMenuDelegate::onSelect() - idSetStarbWD");
 	        var COG = getCOG();
 	        var WindDirection = COG+45;
         	Application.Storage.setValue("WindDirection", WindDirection);
 	        WatchUi.popView(WatchUi.SLIDE_DOWN);
         } else if ( item.getId().equals("idSettings") ) {
-            System.println("TackingMasterMenuDelegate::onSelect() - idSettings");
+//          System.println("TackingMasterMenuDelegate::onSelect() - idSettings");
             var settingsMenu = new WatchUi.Menu2({:title=>WatchUi.loadResource(Rez.Strings.menu_label_Settings)});
 
 			//Get string resources for Settings-menu
@@ -83,7 +83,7 @@ class TackingMasterMenuDelegate extends WatchUi.Menu2InputDelegate {
     }
     
     function onBack() {
-        System.println("TackingMasterMenuDelegate::onBack()");
+//        System.println("TackingMasterMenuDelegate::onBack()");
         WatchUi.popView(WatchUi.SLIDE_DOWN);
     }
 
@@ -100,28 +100,28 @@ class Menu2SampleSubMenuDelegate extends WatchUi.Menu2InputDelegate {
 
         //Draw Boat
         var MenuItem = item.getId();
-        System.println("Menu2SampleSubMenuDelegate::onSelect() - iD=" + MenuItem + " enabled=" + item.isEnabled() );
+ //       System.println("Menu2SampleSubMenuDelegate::onSelect() - iD=" + MenuItem + " enabled=" + item.isEnabled() );
         if (MenuItem.equals("idDrawBoat")){
-	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawBoat");
+//	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawBoat");
     		Application.Storage.setValue("DrawBoat", item.isEnabled()); 
     	} else if (MenuItem.equals("idDrawNWSE")){
-	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawNWSE");
+//	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawNWSE");
     		Application.Storage.setValue("DrawNWSE", item.isEnabled()); 
 		} else if (MenuItem.equals("idDrawSpeedPlot")){
-	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawSpeedPlot");
+//	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawSpeedPlot");
     		Application.Storage.setValue("DrawSpeedPlot", item.isEnabled()); 
 		} else if (MenuItem.equals("idDrawPolarCogPlot")){
-	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawPolarCogPlot");
+//	        System.println("Menu2SampleSubMenuDelegate::onSelect()::DrawPolarCogPlot");
     		Application.Storage.setValue("DrawPolarCogPlot", item.isEnabled()); 
 		} else {
-	        System.println("Menu2SampleSubMenuDelegate::onSelect()::else");
+//	        System.println("Menu2SampleSubMenuDelegate::onSelect()::else");
         }
 
         WatchUi.requestUpdate();
     }
 
     function onBack() {
-        System.println("Menu2SampleSubMenuDelegate::onBack()");
+//        System.println("Menu2SampleSubMenuDelegate::onBack()");
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         WatchUi.popView(WatchUi.SLIDE_DOWN);
         WatchUi.popView(WatchUi.SLIDE_DOWN);

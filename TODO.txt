@@ -1,3 +1,5 @@
+Om.. - bilde med versjonsnummer
+
 All grafikk som vektor-grafikk
 
 Parameterisere tack-angle (90 deg)

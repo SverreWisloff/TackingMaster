@@ -44,11 +44,11 @@ class TackingMasterView extends WatchUi.View {
 	var m_bDrawOrthogonalCogPlot;
 	var m_bDrawPolarCogPlot;
 	var m_boatScale=1.2;
-	var m_SpeedHistory = new TackingMasterDynamics(110,false); // standard 120 (2 min)
-	var m_CogHistory = new TackingMasterDynamics(110, true);   // standard 120 (2 min)
+	var m_SpeedHistory = new TackingMasterDynamics(100,false);   // standard 120 (2 min)
+	var m_CogHistory   = new TackingMasterDynamics(100, true);   // standard 120 (2 min)
 	// Error: Watchdog Tripped Error - Code Executed Too Long
 	// For wathces with watchdog_count=120000, set TackingMasterDynamics for 110 is highest
-
+	
     function initialize() {
         View.initialize();
 //        System.println("TackingMasterView.initialize");
@@ -387,15 +387,14 @@ class TackingMasterView extends WatchUi.View {
     // Draws speed-histoy-plot
 	//================================
 	function drawSpeedPlot(dc){
-		var plotWidth=m_width/2;
-		var plotHeight=35;
+		var plotWidth  = (m_width/2)+5;
+		var plotHeight = 35;
 
     	if (m_bDrawSpeedPlot){
-//			m_SpeedHistory.drawPlot(m_width/2-plotWidth/2-40, m_height/2+35, plotWidth, plotHeight, dc);
 			m_SpeedHistory.drawPlot(10, m_height/2+33, plotWidth, plotHeight, dc);
 
 			dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
-			dc.drawText(m_width*0.70, m_height/2+33, Graphics.FONT_SMALL, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
+			dc.drawText(m_width*0.75, m_height/2+33, Graphics.FONT_SMALL, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
 		} else {
 			dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_TRANSPARENT);
 			dc.drawText(m_width/2, m_height/2+33, Graphics.FONT_SMALL, m_Speed_kn.format("%.1f") + " kn", Graphics.TEXT_JUSTIFY_CENTER);
