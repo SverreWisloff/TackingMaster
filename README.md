@@ -64,6 +64,11 @@ The tack angle is defined to 90 degrees.
  - Better contrast speed-history-plot
  - Three help-lines in the speed-history-plot 
 
+1.8
+ - Deleted support for Norwegian language
+
+
+
 ## Please use it if you find it convinient
 
 And I am happy to hear what you think about it

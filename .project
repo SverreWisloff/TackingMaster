@@ -26,11 +26,6 @@
 			<location>C:/Users/sw/workspace/TackingMaster/resources-eng/strings-eng.xml</location>
 		</link>
 		<link>
-			<name>resources-nob/strings-nob.xml</name>
-			<type>1</type>
-			<location>C:/Users/sw/workspace/TackingMaster/resources-nob/strings-nob.xml</location>
-		</link>
-		<link>
 			<name>source/TackingMasterDynamics.mc</name>
 			<type>1</type>
 			<location>C:/Users/sw/workspace/TackingMaster/source/TackingMasterDynamics.mc</location>
