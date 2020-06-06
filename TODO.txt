@@ -2,6 +2,8 @@ All grafikk som vektor-grafikk
 
 Parameterisere tack-angle (90 deg)
 
+Forbedre batterilevetiden: Ikke filtrere alli data hver eneste sekund?
+
 snitt hastighet siste 2 minutter
 
 snitt COG siste 2 minutter
